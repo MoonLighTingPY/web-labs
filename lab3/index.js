@@ -1,64 +1,184 @@
-// Book class
 class Book {
-    constructor(pages, author, price) {
-        this.pages = pages;
+    constructor(title, author, pages, price) {
+        this.title = title;
         this.author = author;
+        this.pages = pages;
         this.price = price;
     }
 }
 
-// Initial set of books
-let books = [
-    new Book(300, 'Author A', 500),
-    new Book(150, 'Author B', 200),
-    new Book(450, 'Author C', 800),
-    new Book(200, 'Author A', 350)
-];
+let fetchedBooks = [];
 
-// Function to display all books
-function displayBooks(bookArray) {
+function displayBooks(fetchedBooks) {
     const bookList = document.getElementById('book-list');
     bookList.innerHTML = '';
-
-    bookArray.forEach((book, index) => {
+    fetchedBooks.forEach((book, index) => {
         bookList.insertAdjacentHTML('beforeend', `
-            <div class="book">
-                <h3>Book ${index + 1}</h3>
-                <p>Author: ${book.author}</p>
-                <p>Pages: ${book.pages}</p>
-                <p>Price: ${book.price} UAH</p>
+            <div class="book-card">
+                <h3>${book.title}</h3>
+                <p>by ${book.author}</p>
+                <p>${book.pages} pages</p>
+                <p class="price">${book.price} UAH</p>
+                <button onclick="editBook(${index})">Edit</button>
+                <button onclick="deleteBook(${index})">Delete</button>
             </div>
-            <hr>
         `);
     });
 }
 
-// Function to calculate total price of all books
-function calculateTotalPrice() {
-    const total = books.reduce((sum, book) => sum + book.price, 0);
-    document.getElementById('total-price').innerText = total;
+async function fetchBooks() {
+    const response = await fetch('http://localhost:5500/lab3/books/books.json');
+    const data = await response.json();
+    fetchedBooks = data;
+    console.log(fetchedBooks); // Add this line to check the structure
+    displayBooks(fetchedBooks);
 }
 
-// Function to search books by author
 function searchBooks() {
-    const searchQuery = document.getElementById('search').value.toLowerCase();
-    const filteredBooks = books.filter(book => book.author.toLowerCase().includes(searchQuery));
+    const query = document.getElementById('search').value.toLowerCase();
+    const filteredBooks = fetchedBooks.filter(book => book.title.toLowerCase().includes(query));
     displayBooks(filteredBooks);
 }
 
-// Function to sort books
-function sortBooks() {
-    const sortOption = document.getElementById('sort').value;
-    if (sortOption === 'price') {
-        books.sort((a, b) => a.price - b.price);
-    } else if (sortOption === 'pages') {
-        books.sort((a, b) => a.pages - b.pages);
-    } else if (sortOption === 'author') {
-        books.sort((a, b) => a.author.localeCompare(b.author));
-    }
-    displayBooks(books);
+
+function clearSearch() {
+    document.getElementById('search').value = '';
+    displayBooks(fetchedBooks);
 }
 
-// Initial display and calculations
-displayBooks(books);
-calculateTotalPrice();
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.style.display = 'none';
+    });
+    document.getElementById(tabId).style.display = 'block';
+}
+
+function sortBooks(criteria) {
+    fetchedBooks.sort((a, b) => {
+        if (criteria === 'author') {
+            return a.author.localeCompare(b.author);
+        } else if (criteria === 'price') {
+            return a.price - b.price;
+        } else if (criteria === 'pages') {
+            return a.pages - b.pages;
+        }
+    });
+    displayBooks(fetchedBooks);
+}
+
+function toggleCreateBookModal(isEdit = false, index = null) {
+    console.log('toggleCreateBookModal called');
+    const modal = document.getElementById('create-book-modal');
+    const form = document.getElementById('create-book-form');
+
+    if (isEdit) {
+        console.log('Setting form onsubmit to updateBook');
+        form.onsubmit = function(event) {
+            updateBook(event, index);
+        };
+    } else {
+        console.log('Setting form onsubmit to createBook');
+        form.onsubmit = createBook;
+    }
+
+    console.log('Modal before toggle:', modal.classList);
+    modal.classList.toggle('show-modal');
+    console.log('Modal after toggle:', modal.classList);
+}
+
+async function createBook(event) {
+    event.preventDefault();
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const price = document.getElementById('price').value;
+
+    const newBook = { title, author, pages: parseInt(pages), price: parseFloat(price) };
+
+    console.log('Creating book:', newBook);
+
+    try {
+        const response = await fetch('http://localhost:3000/books', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newBook)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to create book: ${response.statusText}`);
+        }
+
+        const createdBook = await response.json();
+        console.log('Created book:', createdBook);
+
+        fetchedBooks.push(createdBook);
+        displayBooks(fetchedBooks);
+        toggleCreateBookModal();
+        document.getElementById('create-book-form').reset();
+    } catch (error) {
+        console.error('Error creating book:', error);
+    }
+}
+
+function editBook(index) {
+    const book = fetchedBooks[index];
+    document.getElementById('title').value = book.title;
+    document.getElementById('author').value = book.author;
+    document.getElementById('pages').value = book.pages;
+    document.getElementById('price').value = book.price;
+
+    toggleCreateBookModal(true, index);
+}
+async function updateBook(event, index) {
+    event.preventDefault();
+    console.log('updateBook called with index:', index);
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const price = document.getElementById('price').value;
+
+    const updatedBook = { title, author, pages: parseInt(pages), price: parseFloat(price) };
+    const bookId = fetchedBooks[index].id;
+
+    const response = await fetch(`http://localhost:5500/lab3/books/${bookId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedBook)
+    });
+
+    if (!response.ok) {
+        console.error('Failed to update book:', response.statusText);
+        return;
+    }
+
+    const responseText = await response.text();
+    if (responseText) {
+        const updatedBookData = JSON.parse(responseText);
+        fetchedBooks[index] = updatedBookData;
+        displayBooks(fetchedBooks);
+        toggleCreateBookModal();
+        document.getElementById('create-book-form').reset();
+    } else {
+        console.error('Empty response from server');
+    }
+}
+
+async function deleteBook(index) {
+    const bookId = fetchedBooks[index].id;
+
+    await fetch(`http://localhost:5500/lab3/books/${bookId}`, {
+        method: 'DELETE'
+    });
+
+    fetchedBooks.splice(index, 1);
+    displayBooks(fetchedBooks);
+}
+
+fetchBooks();
+
+// Initial display
+displayBooks(fetchedBooks);

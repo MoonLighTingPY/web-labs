@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "title": "11",
+        "author": "1",
+        "pages": 200,
+        "price": 150
+    },
+    {
+        "id": 2,
+        "title": "222",
+        "author": "22",
+        "pages": 300,
+        "price": 200
+    },
+    {
+        "id": 3,
+        "title": "333",
+        "author": "33",
+        "pages": 250,
+        "price": 180
+    }
+]
