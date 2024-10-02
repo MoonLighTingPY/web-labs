@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store</title>
+</head>
+<body>
+    <h1>Book Store</h1>
+
+    <!-- Search Input -->
+    <label for="search">Search by Author:</label>
+    <input type="text" id="search" placeholder="Enter author name">
+    <button onclick="searchBooks()">Search</button>
+
+    <!-- Sort Options -->
+    <label for="sort">Sort by:</label>
+    <select id="sort" onchange="sortBooks()">
+        <option value="price">Price</option>
+        <option value="pages">Pages</option>
+        <option value="author">Author</option>
+    </select>
+
+    <!-- Total Price -->
+    <div>
+        <p>Total Price of all Books: <span id="total-price">0</span> UAH</p>
+    </div>
+
+    <!-- Book List -->
+    <div id="book-list">
+        <!-- Book details will be displayed here -->
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
