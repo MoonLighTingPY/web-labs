@@ -70,15 +70,21 @@ function toggleCreateBookModal(isEdit = false, index = null) {
     console.log('toggleCreateBookModal called');
     const modal = document.getElementById('create-book-modal');
     const form = document.getElementById('create-book-form');
+    const modalTitle = modal.querySelector('h2');
+    const submitButton = form.querySelector('button[type="submit"]');
 
     if (isEdit) {
         console.log('Setting form onsubmit to updateBook');
         form.onsubmit = function(event) {
             updateBook(event, index);
         };
+        modalTitle.textContent = 'Edit Book';
+        submitButton.textContent = 'Update Book';
     } else {
         console.log('Setting form onsubmit to createBook');
         form.onsubmit = createBook;
+        modalTitle.textContent = 'Create New Book';
+        submitButton.textContent = 'Create Book';
     }
 
     console.log('Modal before toggle:', modal.classList);
@@ -133,7 +139,6 @@ function editBook(index) {
 }
 async function updateBook(event, index) {
     event.preventDefault();
-    console.log('updateBook called with index:', index);
     const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
     const pages = document.getElementById('pages').value;
@@ -155,29 +160,28 @@ async function updateBook(event, index) {
         return;
     }
 
-    const responseText = await response.text();
-    if (responseText) {
-        const updatedBookData = JSON.parse(responseText);
-        fetchedBooks[index] = updatedBookData;
-        displayBooks(fetchedBooks);
-        toggleCreateBookModal();
-        document.getElementById('create-book-form').reset();
-    } else {
-        console.error('Empty response from server');
-    }
+    const updatedBookData = await response.json();
+    fetchedBooks[index] = updatedBookData;
+    displayBooks(fetchedBooks);
+    toggleCreateBookModal();
+    document.getElementById('create-book-form').reset();
 }
 
 async function deleteBook(index) {
     const bookId = fetchedBooks[index].id;
 
-    await fetch(`http://localhost:5500/lab3/books/${bookId}`, {
+    const response = await fetch(`http://localhost:5500/lab3/books/${bookId}`, {
         method: 'DELETE'
     });
+
+    if (!response.ok) {
+        console.error('Failed to delete book:', response.statusText);
+        return;
+    }
 
     fetchedBooks.splice(index, 1);
     displayBooks(fetchedBooks);
 }
-
 fetchBooks();
 
 // Initial display
