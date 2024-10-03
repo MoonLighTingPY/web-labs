@@ -167,15 +167,3 @@ form input {
     background-color: #1c86e1;
 }
 
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    .book-card {
-        width: calc(50% - 20px);
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .book-card {
-        width: 100%;
-    }
-}
