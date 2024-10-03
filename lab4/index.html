@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RomanBooks</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -17,19 +17,22 @@
         </div>
         <nav>
             <button onclick="toggleCreateBookModal()">Create Book</button>
-            <h5>Sort by:</h5>
             <select id="sort-options" onchange="sortBooks(this.value)">
+                <option value="title">Title</option>
                 <option value="author">Author</option>
                 <option value="price">Price</option>
                 <option value="pages">Pages</option>
-              </select>
+            </select>
         </nav>
     </header>
+
     <main>
         <div id="my-books" class="tab-content">
             <div id="book-list" class="book-list"></div>
+            
         </div>
     </main>
+
     <!-- Modal for creating a new book -->
     <div id="create-book-modal" class="modal">
         <div class="modal-content">
@@ -52,6 +55,7 @@
             </form>
         </div>
     </div>
-    <script src="./js/index.js" type="module"></script>
+
+    <script src="js/index.js"></script>
 </body>
 </html>
