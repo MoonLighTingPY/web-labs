@@ -8,27 +8,35 @@ class Book {
 }
 
 const books = [
-    new Book('Book One', 'Author One', 200, 150),
-    new Book('Book Two', 'Author Two', 300, 200),
-    new Book('Book Three', 'Author Three', 250, 180),
+    new Book('Hitler', 'Mein Kampf', 300, 3000000),
+    new Book('Im not a PEDOPHILE!', 'P. Diddy', 1252, 4124),
+    new Book('N*ggas in Paris', 'Hitler', 111, 665552),
 ];
 
+function calculateTotalPrice() {
+  const totalPrice = books.reduce((sum, book) => sum + book.price, 0);
+  document.getElementById('total-price').textContent = `${totalPrice} UAH`;
+}
+
 function displayBooks(books) {
-    const bookList = document.getElementById('book-list');
-    bookList.innerHTML = '';
-    books.forEach((book, index) => {
+  const bookList = document.getElementById('book-list');
+  bookList.innerHTML = '';
+  books.forEach((book, index) => {
       bookList.insertAdjacentHTML('beforeend', `
-        <div class="book-card">
-          <h3>${book.title}</h3>
-          <p>by ${book.author}</p>
-          <p>${book.pages} pages</p>
-          <p class="price">${book.price} UAH</p>
-          <button onclick="editBook(${index})">Edit</button>
-          <button onclick="deleteBook(${index})">Delete</button>
-        </div>
+          <div class="book-card">
+              <h3>${book.title}</h3>
+              <p>by ${book.author}</p>
+              <p>${book.pages} pages</p>
+              <p class="price">${book.price} UAH</p>
+              <div class="button-group">
+                  <button onclick="editBook(${index})">Edit</button>
+                  <button onclick="deleteBook(${index})">Delete</button>
+              </div>
+          </div>
       `);
-    });
-  }
+  });
+  calculateTotalPrice(); // Update total price whenever books are displayed
+}
 
   function editBook(index) {
     const book = books[index];
@@ -36,9 +44,9 @@ function displayBooks(books) {
     document.getElementById('author').value = book.author;
     document.getElementById('pages').value = book.pages;
     document.getElementById('price').value = book.price;
-  
+
     toggleCreateBookModal(true, index);
-  }
+}
   
   function deleteBook(index) {
     books.splice(index, 1);
@@ -77,23 +85,48 @@ function showTab(tabId) {
     document.getElementById(tabId).style.display = 'block';
 }
 
-function toggleCreateBookModal() {
-    const modal = document.getElementById('create-book-modal');
-    modal.classList.toggle('show-modal');
+function toggleCreateBookModal(isEdit = false, index = null) {
+  const modal = document.getElementById('create-book-modal');
+  const modalTitle = document.querySelector('#create-book-modal h2');
+  const submitButton = document.querySelector('#create-book-form .primary-btn');
+  
+  modal.classList.toggle('show-modal');
+  
+  if (isEdit) {
+      const book = books[index];
+      document.getElementById('create-book-form').dataset.editIndex = index;
+      document.getElementById('create-book-form').dataset.isEdit = true;
+      modalTitle.textContent = `Edit Book: ${book.title}`;
+      submitButton.textContent = 'Confirm';
+  } else {
+      document.getElementById('create-book-form').removeAttribute('data-edit-index');
+      document.getElementById('create-book-form').removeAttribute('data-is-edit');
+      modalTitle.textContent = 'Create New Book';
+      submitButton.textContent = 'Create Book';
+  }
 }
 
 function createBook(event) {
-    event.preventDefault();
-    const title = document.getElementById('title').value;
-    const author = document.getElementById('author').value;
-    const pages = document.getElementById('pages').value;
-    const price = document.getElementById('price').value;
+  event.preventDefault();
+  const title = document.getElementById('title').value;
+  const author = document.getElementById('author').value;
+  const pages = document.getElementById('pages').value;
+  const price = document.getElementById('price').value;
 
-    const newBook = new Book(title, author, parseInt(pages), parseFloat(price));
-    books.push(newBook);
-    displayBooks(books);
-    toggleCreateBookModal();
-    document.getElementById('create-book-form').reset();
+  const isEdit = document.getElementById('create-book-form').dataset.isEdit === 'true';
+  const index = document.getElementById('create-book-form').dataset.editIndex;
+
+  if (isEdit && index !== null) {
+      const updatedBook = new Book(title, author, parseInt(pages), parseFloat(price));
+      books[index] = updatedBook;
+  } else {
+      const newBook = new Book(title, author, parseInt(pages), parseFloat(price));
+      books.push(newBook);
+  }
+
+  displayBooks(books);
+  toggleCreateBookModal();
+  document.getElementById('create-book-form').reset();
 }
 
 function sortBooks(criteria) {

@@ -6,30 +6,45 @@
     <title>RomanBooks</title>
     <link rel="stylesheet" href="./style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">RomanBooks</div>
+        <div class="logo">
+            <i class="fas fa-book-open"></i>
+            RomanBooks
+        </div>
+        
         <div class="search-container">
             <input type="text" id="search" placeholder="Search by title">
-            <button onclick="searchBooks()">Search</button>
-            <button onclick="clearSearch()">Clear</button>
+            <button class="search-btn" onclick="searchBooks()">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="clear-btn" onclick="clearSearch()">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-        <nav>
-            <button onclick="toggleCreateBookModal()">Create Book</button>
+        
+        <nav> 
+            <div class="total-price-container">
+                <h5>Total Price: <span id="total-price">0 UAH</span></h5>
+            </div>
+            <h5>Sort by:</h5>
             <select id="sort-options" onchange="sortBooks(this.value)">
                 <option value="title">Title</option>
                 <option value="author">Author</option>
                 <option value="price">Price</option>
                 <option value="pages">Pages</option>
             </select>
+            <button onclick="toggleCreateBookModal()">
+                <i class="fas fa-plus"></i> Create Book
+            </button>
         </nav>
     </header>
 
     <main>
         <div id="my-books" class="tab-content">
             <div id="book-list" class="book-list"></div>
-            
         </div>
     </main>
 
