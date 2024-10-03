@@ -1,5 +1,6 @@
 class Book {
-    constructor(title, author, pages, price) {
+    constructor(id, title, author, pages, price) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.pages = pages;
@@ -26,12 +27,18 @@ function displayBooks(fetchedBooks) {
     });
 }
 
+
 async function fetchBooks() {
-    const response = await fetch('http://localhost:5500/lab3/books/books.json');
-    const data = await response.json();
-    fetchedBooks = data;
-    console.log(fetchedBooks); // Add this line to check the structure
-    displayBooks(fetchedBooks);
+    try {
+        const response = await fetch('http://localhost:5500/lab3/books/books.json');
+        if (!response.ok) {
+            throw new Error('Failed to fetch books');
+        }
+        fetchedBooks = await response.json();
+        displayBooks(fetchedBooks);
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function searchBooks() {
@@ -101,30 +108,27 @@ async function createBook(event) {
 
     const newBook = { title, author, pages: parseInt(pages), price: parseFloat(price) };
 
-    console.log('Creating book:', newBook);
-
     try {
-        const response = await fetch('http://localhost:3000/books', {
+        const response = await fetch('http://localhost:5500/lab3/books', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify(newBook)
         });
 
         if (!response.ok) {
-            throw new Error(`Failed to create book: ${response.statusText}`);
+            throw new Error('Failed to create book');
         }
 
         const createdBook = await response.json();
-        console.log('Created book:', createdBook);
-
         fetchedBooks.push(createdBook);
         displayBooks(fetchedBooks);
         toggleCreateBookModal();
         document.getElementById('create-book-form').reset();
     } catch (error) {
-        console.error('Error creating book:', error);
+        console.error(error);
     }
 }
 
@@ -147,41 +151,49 @@ async function updateBook(event, index) {
     const updatedBook = { title, author, pages: parseInt(pages), price: parseFloat(price) };
     const bookId = fetchedBooks[index].id;
 
-    const response = await fetch(`http://localhost:5500/lab3/books/${bookId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedBook)
-    });
+    try {
+        const response = await fetch(`http://localhost:5500/lab3/books/${bookId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify(updatedBook)
+        });
 
-    if (!response.ok) {
-        console.error('Failed to update book:', response.statusText);
-        return;
+        if (!response.ok) {
+            throw new Error('Failed to update book');
+        }
+
+        const updatedBookData = await response.json();
+        fetchedBooks[index] = updatedBookData;
+        displayBooks(fetchedBooks);
+        toggleCreateBookModal();
+        document.getElementById('create-book-form').reset();
+    } catch (error) {
+        console.error(error);
     }
-
-    const updatedBookData = await response.json();
-    fetchedBooks[index] = updatedBookData;
-    displayBooks(fetchedBooks);
-    toggleCreateBookModal();
-    document.getElementById('create-book-form').reset();
 }
 
 async function deleteBook(index) {
     const bookId = fetchedBooks[index].id;
 
-    const response = await fetch(`http://localhost:5500/lab3/books/${bookId}`, {
-        method: 'DELETE'
-    });
+    try {
+        const response = await fetch(`http://localhost:5500/lab3/books/${bookId}`, {
+            method: 'DELETE'
+        });
 
-    if (!response.ok) {
-        console.error('Failed to delete book:', response.statusText);
-        return;
+        if (!response.ok) {
+            throw new Error('Failed to delete book');
+        }
+
+        fetchedBooks.splice(index, 1);
+        displayBooks(fetchedBooks);
+    } catch (error) {
+        console.error(error);
     }
-
-    fetchedBooks.splice(index, 1);
-    displayBooks(fetchedBooks);
 }
+
 fetchBooks();
 
 // Initial display
