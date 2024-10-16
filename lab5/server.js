@@ -12,6 +12,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
+// Serve static files (HTML, CSS, JS)
+app.use(express.static(path.join(__dirname, 'public'))); // Assuming your HTML, CSS, and JS files are in a 'public' folder
+
 // Load books from JSON file
 const getBooks = () => {
     const data = fs.readFileSync(path.join(__dirname, 'books.json'));
@@ -66,6 +69,11 @@ app.delete('/api/books/:title', (req, res) => {
     books.splice(index, 1);
     saveBooks(books);
     res.status(204).send();
+});
+
+// Serve the HTML file at the root
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Adjust the path as necessary
 });
 
 // Start the server
