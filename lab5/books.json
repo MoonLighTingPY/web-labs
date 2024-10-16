@@ -1,20 +1,164 @@
 [
-    {
-        "title": "Mein Kampf",
-        "author": "Hitler",
-        "pages": 300,
-        "price": 1488
-    },
-    {
-        "title": "I'm not a PEDOPHILE!",
-        "author": "P. Diddy",
-        "pages": 1252,
-        "price": 1000
-    },
-    {
-        "title": "N*ggas in Paris",
-        "author": "Kanye West",
-        "pages": 111,
-        "price": 1337
-    }
+  {
+    "title": "Mein Kampf",
+    "author": "Hitler",
+    "pages": 300,
+    "price": 1488
+  },
+  {
+    "title": "N*ggas in Paris",
+    "author": "Kanye West",
+    "pages": 111,
+    "price": 1337
+  },
+  {
+    "title": "Hate Speech 101",
+    "author": "Anonymous",
+    "pages": 450,
+    "price": 500
+  },
+  {
+    "title": "Pride and Prejudice and Zombies",
+    "author": "Seth Grahame-Smith",
+    "pages": 368,
+    "price": 600
+  },
+  {
+    "title": "How to Be a Millionaire",
+    "author": "Richard Branson",
+    "pages": 200,
+    "price": 999
+  },
+  {
+    "title": "The Mind of a Rapper",
+    "author": "Drake",
+    "pages": 180,
+    "price": 999
+  },
+  {
+    "title": "Rage Against the Machine",
+    "author": "Tom Morello",
+    "pages": 410,
+    "price": 1300
+  },
+  {
+    "title": "The Paradox of Choice",
+    "author": "Barry Schwartz",
+    "pages": 294,
+    "price": 450
+  },
+  {
+    "title": "All the Rage",
+    "author": "Martin Amis",
+    "pages": 300,
+    "price": 1200
+  },
+  {
+    "title": "Wit and Wisdom of the Streets",
+    "author": "Lil Wayne",
+    "pages": 175,
+    "price": 400
+  },
+  {
+    "title": "The Complete Idiot's Guide to Conspiracy Theories",
+    "author": "D. J. O'Brien",
+    "pages": 289,
+    "price": 550
+  },
+  {
+    "title": "Living Life Off the Edge",
+    "author": "Jesse James",
+    "pages": 240,
+    "price": 950
+  },
+  {
+    "title": "Society and Its Misfits",
+    "author": "Kurt Vonnegut",
+    "pages": 350,
+    "price": 870
+  },
+  {
+    "title": "My Struggle with Reality",
+    "author": "C. K. Louis",
+    "pages": 425,
+    "price": 1220
+  },
+  {
+    "title": "Reality Bites",
+    "author": "Winona Ryder",
+    "pages": 320,
+    "price": 800
+  },
+  {
+    "title": "The Psychology of Success",
+    "author": "Tony Robbins",
+    "pages": 400,
+    "price": 1300
+  },
+  {
+    "title": "Caution: Contents May Be Disturbing",
+    "author": "C. H. Robinson",
+    "pages": 275,
+    "price": 700
+  },
+  {
+    "title": "How to Lose Friends and Alienate People",
+    "author": "Toby Young",
+    "pages": 232,
+    "price": 620
+  },
+  {
+    "title": "The Unforgiven",
+    "author": "J. K. Rowling",
+    "pages": 550,
+    "price": 1450
+  },
+  {
+    "title": "This Will Make You Think",
+    "author": "R. H. Sin",
+    "pages": 150,
+    "price": 250
+  },
+  {
+    "title": "The Many Faces of Evil",
+    "author": "B. C. Arnold",
+    "pages": 450,
+    "price": 920
+  },
+  {
+    "title": "The History of Bad Decisions",
+    "author": "Frank Underwood",
+    "pages": 300,
+    "price": 1300
+  },
+  {
+    "title": "A Guide to Living Off the Grid",
+    "author": "Bear Grylls",
+    "pages": 380,
+    "price": 600
+  },
+  {
+    "title": "Life Lessons from the Ghetto",
+    "author": "Rick Ross",
+    "pages": 250,
+    "price": 750
+  },
+  {
+    "title": "Exposing the Truth",
+    "author": "The Unknown",
+    "pages": 400,
+    "price": 1100
+  },
+  {
+    "title": "lol",
+    "author": "11",
+    "pages": 1,
+    "price": 1
+  },
+  {
+    "title": "11",
+    "author": "1",
+    "pages": 1,
+    "price": 1
+  }
 ]
