@@ -8,20 +8,15 @@ class Book {
 }
 
 const books = [
-    new Book('Hitler', 'Mein Kampf', 300, 3000000),
-    new Book('Im not a PEDOPHILE!', 'P. Diddy', 1252, 4124),
-    new Book('N*ggas in Paris', 'Hitler', 111, 665552),
+    new Book('Mein Kampf', 'Hitler', 300, 1488),
+    new Book('Im not a PEDOPHILE!', 'P. Diddy', 1252, 1000),
+    new Book('N*ggas in Paris', 'Kanye West', 111, 1337),
 ];
 
-function calculateTotalPrice() {
-  const totalPrice = books.reduce((sum, book) => sum + book.price, 0);
-  document.getElementById('total-price').textContent = `${totalPrice} UAH`;
-}
-
-function displayBooks(books) {
+function displayBooks(filteredBooks = books) {
   const bookList = document.getElementById('book-list');
   bookList.innerHTML = '';
-  books.forEach((book, index) => {
+  filteredBooks.forEach((book, index) => {
       bookList.insertAdjacentHTML('beforeend', `
           <div class="book-card">
               <h3>${book.title}</h3>
@@ -35,7 +30,12 @@ function displayBooks(books) {
           </div>
       `);
   });
-  calculateTotalPrice(); // Update total price whenever books are displayed
+  calculateTotalPrice(filteredBooks); // Update total price for displayed books
+}
+
+function calculateTotalPrice(filteredBooks = books) {
+  const totalPrice = filteredBooks.reduce((sum, book) => sum + book.price, 0);
+  document.getElementById('total-price').textContent = `${totalPrice} UAH`;
 }
 
   function editBook(index) {
@@ -53,25 +53,34 @@ function displayBooks(books) {
     displayBooks(books);
   }
   
-function updateBook(event, index) {
+  function updateBook(event, index) {
     event.preventDefault();
     const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
     const pages = document.getElementById('pages').value;
     const price = document.getElementById('price').value;
   
+    // Check for duplicate title
+    const duplicateBook = books.find((book, i) => book.title === title && i !== index);
+    if (duplicateBook) {
+      alert('A book with this title already exists.');
+      return;
+    }
+  
     const updatedBook = new Book(title, author, parseInt(pages), parseFloat(price));
     books[index] = updatedBook;
     displayBooks(books);
     toggleCreateBookModal();
     document.getElementById('create-book-form').reset();
-}
+  }
 
-function searchBooks() {
-    const query = document.getElementById('search').value.toLowerCase();
-    const filteredBooks = books.filter(book => book.title.toLowerCase().includes(query));
+  let filteredBooks = books;
+
+  function searchBooks() {
+    const query = document.getElementById('search').value.trim().toLowerCase();
+    filteredBooks = books.filter(book => book.title.toLowerCase().includes(query));
     displayBooks(filteredBooks);
-}
+  }
 
 function clearSearch() {
     document.getElementById('search').value = '';
@@ -116,6 +125,13 @@ function createBook(event) {
   const isEdit = document.getElementById('create-book-form').dataset.isEdit === 'true';
   const index = document.getElementById('create-book-form').dataset.editIndex;
 
+  // Check for duplicate title
+  const duplicateBook = books.find((book, i) => book.title === title && (!isEdit || i !== parseInt(index)));
+  if (duplicateBook) {
+    alert('A book with this title already exists.');
+    return;
+  }
+
   if (isEdit && index !== null) {
       const updatedBook = new Book(title, author, parseInt(pages), parseFloat(price));
       books[index] = updatedBook;
@@ -129,25 +145,34 @@ function createBook(event) {
   document.getElementById('create-book-form').reset();
 }
 
-function sortBooks(criteria) {
+function sortBooks(criteria, booksToSort = filteredBooks) {
   switch (criteria) {
     case 'title':
-      books.sort((a, b) => a.title.localeCompare(b.title));
+      booksToSort.sort((a, b) => a.title.localeCompare(b.title));
       break;
     case 'author':
-      books.sort((a, b) => a.author.localeCompare(b.author));
+      booksToSort.sort((a, b) => a.author.localeCompare(b.author));
       break;
     case 'price':
-      books.sort((a, b) => a.price - b.price);
+      booksToSort.sort((a, b) => a.price - b.price);
       break;
     case 'pages':
-      books.sort((a, b) => a.pages - b.pages);
+      booksToSort.sort((a, b) => a.pages - b.pages);
       break;
     default:
       return;
   }
-  displayBooks(books);
+  displayBooks(booksToSort);
 }
 
 // Initial display
 displayBooks(books);
+
+
+function outerfunction () {
+  var outervalue = 1;
+  function innerfunction () {
+    console.log(outervalue);
+  }
+  innerfunction();
+}
