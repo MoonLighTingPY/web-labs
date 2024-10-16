@@ -105,7 +105,7 @@ app.delete('/api/books/:title', (req, res) => {
     const { title } = req.params;
 
     const index = books.findIndex(book => book.title === title);
-    if (index === -1) {
+    if (index === -1) { 
         return res.status(404).send('Book not found');
     }
 
