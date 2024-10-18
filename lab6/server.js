@@ -4,7 +4,6 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-
 const app = express();
 
 app.use(cors());
@@ -18,28 +17,28 @@ const getBooks = async () => {
   const data = await readFile(filePath, 'utf8');
   return JSON.parse(data);
 };
+
 app.get('/api/books', async (req, res) => {
-    const { search, filter, order } = req.query;
-    let books = await getBooks();
-  
-    if (search) {
-      books = books.filter(book =>
-        book.title.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-  
-    if (filter) {
-      books = books.sort((a, b) => {
-        if (order === 'desc') {
-          return a[filter] < b[filter] ? 1 : -1;
-        }
-        return a[filter] > b[filter] ? 1 : -1;
-      });
-    }
-  
-    res.json(books);
-  });
-  
+  const { search, filter, order } = req.query;
+  let books = await getBooks();
+
+  if (search) {
+    books = books.filter(book =>
+      book.title.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  if (filter) {
+    books = books.sort((a, b) => {
+      if (order === 'desc') {
+        return a[filter] < b[filter] ? 1 : -1;
+      }
+      return a[filter] > b[filter] ? 1 : -1;
+    });
+  }
+
+  res.json(books);
+});
 
 app.get('/api/books/:id', async (req, res) => {
   const { id } = req.params;

@@ -1,4 +1,3 @@
-// HomeContent.jsx
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Box from '@mui/material/Box';
@@ -13,7 +12,6 @@ function HomeContent() {
   const [visibleBooks, setVisibleBooks] = useState(3);
 
   useEffect(() => {
-    // Fetch data from the backend REST API
     axios.get('http://localhost:5000/api/books')
       .then(response => {
         setBooks(response.data);
@@ -27,12 +25,12 @@ function HomeContent() {
 
   return (
     <Box mt={4}>
-      <Typography variant="h4" gutterBottom align="center">
+      <Typography variant="h4" gutterBottom align="center" sx={{ marginBottom: '20px', fontWeight: 'bold' }}>
         Welcome to RomanBooks
       </Typography>
       <Grid container spacing={4}>
-        {books.slice(0, visibleBooks).map((book, index) => (
-          <Grid item xs={12} sm={6} md={4} key={book.id || index}>
+        {books.slice(0, visibleBooks).map((book) => (
+          <Grid item xs={12} sm={6} md={4} key={book.id}>
             <Card>
               <CardContent>
                 <Typography variant="h6">{book.title}</Typography>

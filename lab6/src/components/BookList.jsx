@@ -1,4 +1,3 @@
-// BookList.jsx
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardContent, Typography, Grid, Button, Box, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
@@ -8,21 +7,22 @@ const BookList = () => {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('');
+  const [order, setOrder] = useState('asc');
 
   useEffect(() => {
-    axios.get('/src/api/books.json')
-      .then(response => {
-        console.log(response.data); // Log the response data
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/books', {
+          params: { search: searchTerm, filter, order }
+        });
         setBooks(response.data);
-      })
-      .catch(error => console.error('Error fetching books:', error));
-  }, []);
+      } catch (error) {
+        console.error('Error fetching books:', error);
+      }
+    };
 
-  const filteredBooks = books.filter(book => {
-    const matchesSearch = book.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filter ? book[filter] : true;
-    return matchesSearch && matchesFilter;
-  });
+    fetchBooks();
+  }, [searchTerm, filter, order]);
 
   return (
     <div className="book-list">
@@ -36,7 +36,7 @@ const BookList = () => {
           size="small"
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
-          style={{ marginRight: '16px' }}
+          sx={{ marginRight: '16px' }}
         />
         <FormControl variant="outlined" size="small">
           <InputLabel>Filter</InputLabel>
@@ -48,11 +48,18 @@ const BookList = () => {
             <MenuItem value="author">Author</MenuItem>
           </Select>
         </FormControl>
+        <FormControl variant="outlined" size="small">
+          <InputLabel>Order</InputLabel>
+          <Select value={order} onChange={e => setOrder(e.target.value)} label="Order">
+            <MenuItem value="asc">Ascending</MenuItem>
+            <MenuItem value="desc">Descending</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
       <Grid container spacing={4}>
-        {filteredBooks.map((book, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card className="card-content">
+        {books.map((book) => (
+          <Grid item xs={12} sm={6} md={4} key={book.id}>
+            <Card>
               <CardContent>
                 <Typography variant="h6">{book.title}</Typography>
                 <Typography color="textSecondary">By: {book.author}</Typography>
