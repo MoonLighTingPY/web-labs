@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "title": "Mein Kampf",
+    "author": "Adolf Hitler",
+    "description": "A controversial autobiography outlining political ideologies.",
+    "pages": 300,
+    "category": "Historical",
+    "price": 1488
+  },
+  {
+    "id": 2,
+    "title": "N*ggas in Paris",
+    "author": "Kanye West",
+    "description": "A poetic journey into the life of fame and fortune.",
+    "pages": 111,
+    "category": "Fiction",
+    "price": 1337
+  },
+  {
+    "id": 3,
+    "title": "Rise of Tyrants",
+    "author": "Victor von Weiss",
+    "description": "A chilling historical fiction about the rise and fall of authoritarian regimes.",
+    "pages": 450,
+    "category": "Historical Fiction",
+    "price": 1299
+  },
+  {
+    "id": 4,
+    "title": "Echoes of the Empire",
+    "author": "Sarah Stein",
+    "description": "A haunting narrative of war-torn nations and the echoes of past empires.",
+    "pages": 320,
+    "category": "Historical",
+    "price": 1599
+  },
+  {
+    "id": 5,
+    "title": "Fame and Shadows",
+    "author": "Dylan Carter",
+    "description": "A dark exploration of celebrity culture and the shadows it casts.",
+    "pages": 275,
+    "category": "Drama",
+    "price": 999
+  },
+  {
+    "id": 6,
+    "title": "Through the Fire",
+    "author": "Lilith Knight",
+    "description": "An emotional rollercoaster of survival in the face of adversity.",
+    "pages": 210,
+    "category": "Thriller",
+    "price": 899
+  },
+  {
+    "id": 7,
+    "title": "The Last Dictator",
+    "author": "Marcus Donovan",
+    "description": "A tale of the final days of a collapsing dictatorship, told through the eyes of its people.",
+    "pages": 390,
+    "category": "Political Fiction",
+    "price": 1399
+  },
+  {
+    "id": 8,
+    "title": "The Fallen Kingdom",
+    "author": "Ava Reigns",
+    "description": "A fantasy epic about a once-prosperous kingdom now on the brink of destruction.",
+    "pages": 500,
+    "category": "Fantasy",
+    "price": 1799
+  },
+  {
+    "id": 9,
+    "title": "City of Lights",
+    "author": "Jay Carter",
+    "description": "A story of love and betrayal set against the backdrop of a bustling metropolis.",
+    "pages": 280,
+    "category": "Romance",
+    "price": 1099
+  },
+  {
+    "id": 10,
+    "title": "Silent Streets",
+    "author": "L. A. Noire",
+    "description": "A gripping detective novel set in the shadowy streets of a crime-ridden city.",
+    "pages": 350,
+    "category": "Mystery",
+    "price": 1299
+  },
+  {
+    "id": 11,
+    "title": "Under the Sun",
+    "author": "Elena García",
+    "description": "A poignant tale of migration and the search for a better life under the scorching sun.",
+    "pages": 315,
+    "category": "Literary Fiction",
+    "price": 1199
+  },
+  {
+    "id": 12,
+    "title": "The King's Gambit",
+    "author": "Harold Wren",
+    "description": "A political thriller about the intrigue and machinations in the royal court.",
+    "pages": 450,
+    "category": "Thriller",
+    "price": 1499
+  }
+]
