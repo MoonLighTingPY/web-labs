@@ -1,12 +1,12 @@
-
+// src/components/CheckoutPage.jsx
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, TextField, Typography, Box } from '@mui/material';
-import { useHistory } from 'react-router-dom';
-import ErrorMessage from './ErrorMessage'; // Import the ErrorMessage component
+import { Button, TextField, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import ErrorMessage from './ErrorMessage';
 
-const CheckoutPage = () => {
-  const history = useHistory();
+function CheckoutPage() {
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -17,33 +17,21 @@ const CheckoutPage = () => {
       address: '',
     },
     validationSchema: Yup.object({
-      firstName: Yup.string()
-        .max(15, 'First name must be 15 characters or less')
-        .required('First name is required'),
-      lastName: Yup.string()
-        .max(20, 'Last name must be 20 characters or less')
-        .required('Last name is required'),
-      email: Yup.string()
-        .email('Invalid email address')
-        .required('Email is required'),
-      phone: Yup.string()
-        .matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits')
-        .required('Phone number is required'),
-      address: Yup.string()
-        .required('Address is required'),
+      firstName: Yup.string().required('First Name is required'),
+      lastName: Yup.string().required('Last Name is required'),
+      email: Yup.string().email('Invalid email address').required('Email is required'),
+      phone: Yup.string().required('Phone Number is required'),
+      address: Yup.string().required('Address is required'),
     }),
     onSubmit: (values) => {
-      // Handle successful form submission
-      console.log('Form values:', values);
-      // Redirect to success page
-      history.push('/success');
+      // Handle form submission
+      console.log(values);
+      navigate('/success');
     },
   });
 
   return (
-    <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 4 }}>
-      <Typography variant="h4">Checkout</Typography>
-
+    <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
       <TextField
         fullWidth
         variant="outlined"
@@ -59,7 +47,6 @@ const CheckoutPage = () => {
       {formik.touched.firstName && formik.errors.firstName && (
         <ErrorMessage message={formik.errors.firstName} />
       )}
-
       <TextField
         fullWidth
         variant="outlined"
@@ -75,7 +62,6 @@ const CheckoutPage = () => {
       {formik.touched.lastName && formik.errors.lastName && (
         <ErrorMessage message={formik.errors.lastName} />
       )}
-
       <TextField
         fullWidth
         variant="outlined"
@@ -91,7 +77,6 @@ const CheckoutPage = () => {
       {formik.touched.email && formik.errors.email && (
         <ErrorMessage message={formik.errors.email} />
       )}
-
       <TextField
         fullWidth
         variant="outlined"
@@ -107,7 +92,6 @@ const CheckoutPage = () => {
       {formik.touched.phone && formik.errors.phone && (
         <ErrorMessage message={formik.errors.phone} />
       )}
-
       <TextField
         fullWidth
         variant="outlined"
@@ -123,12 +107,11 @@ const CheckoutPage = () => {
       {formik.touched.address && formik.errors.address && (
         <ErrorMessage message={formik.errors.address} />
       )}
-
       <Button color="primary" variant="contained" fullWidth type="submit" sx={{ mt: 3 }}>
         Continue
       </Button>
     </Box>
   );
-};
+}
 
 export default CheckoutPage;
