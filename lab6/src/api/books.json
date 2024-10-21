@@ -6,7 +6,8 @@
     "description": "A controversial autobiography outlining political ideologies.",
     "pages": 300,
     "category": "Historical",
-    "price": 1488
+    "price": 1488,
+    "picture": "https://picsum.photos/200/300?random=1"
   },
   {
     "id": 2,
@@ -15,7 +16,8 @@
     "description": "A poetic journey into the life of fame and fortune.",
     "pages": 111,
     "category": "Fiction",
-    "price": 1337
+    "price": 1337,
+    "picture": "https://picsum.photos/200/300?random=2"
   },
   {
     "id": 3,
@@ -24,7 +26,8 @@
     "description": "A chilling historical fiction about the rise and fall of authoritarian regimes.",
     "pages": 450,
     "category": "Historical Fiction",
-    "price": 1299
+    "price": 1299,
+    "picture": "https://picsum.photos/200/300?random=3"
   },
   {
     "id": 4,
@@ -33,7 +36,8 @@
     "description": "A haunting narrative of war-torn nations and the echoes of past empires.",
     "pages": 320,
     "category": "Historical",
-    "price": 1599
+    "price": 1599,
+    "picture": "https://picsum.photos/200/300?random=4"
   },
   {
     "id": 5,
@@ -42,7 +46,8 @@
     "description": "A dark exploration of celebrity culture and the shadows it casts.",
     "pages": 275,
     "category": "Drama",
-    "price": 999
+    "price": 999,
+    "picture": "https://picsum.photos/200/300?random=5"
   },
   {
     "id": 6,
@@ -51,7 +56,8 @@
     "description": "An emotional rollercoaster of survival in the face of adversity.",
     "pages": 210,
     "category": "Thriller",
-    "price": 899
+    "price": 899,
+    "picture": "https://picsum.photos/200/300?random=6"
   },
   {
     "id": 7,
@@ -60,7 +66,8 @@
     "description": "A tale of the final days of a collapsing dictatorship, told through the eyes of its people.",
     "pages": 390,
     "category": "Political Fiction",
-    "price": 1399
+    "price": 1399,
+    "picture": "https://picsum.photos/200/300?random=7"
   },
   {
     "id": 8,
@@ -69,7 +76,8 @@
     "description": "A fantasy epic about a once-prosperous kingdom now on the brink of destruction.",
     "pages": 500,
     "category": "Fantasy",
-    "price": 1799
+    "price": 1799,
+    "picture": "https://picsum.photos/200/300?random=8"
   },
   {
     "id": 9,
@@ -78,7 +86,8 @@
     "description": "A story of love and betrayal set against the backdrop of a bustling metropolis.",
     "pages": 280,
     "category": "Romance",
-    "price": 1099
+    "price": 1099,
+    "picture": "https://picsum.photos/200/300?random=9"
   },
   {
     "id": 10,
@@ -87,7 +96,8 @@
     "description": "A gripping detective novel set in the shadowy streets of a crime-ridden city.",
     "pages": 350,
     "category": "Mystery",
-    "price": 1299
+    "price": 1299,
+    "picture": "https://picsum.photos/200/300?random=10"
   },
   {
     "id": 11,
@@ -96,7 +106,8 @@
     "description": "A poignant tale of migration and the search for a better life under the scorching sun.",
     "pages": 315,
     "category": "Literary Fiction",
-    "price": 1199
+    "price": 1199,
+    "picture": "https://picsum.photos/200/300?random=11"
   },
   {
     "id": 12,
@@ -105,6 +116,7 @@
     "description": "A political thriller about the intrigue and machinations in the royal court.",
     "pages": 450,
     "category": "Thriller",
-    "price": 1499
+    "price": 1499,
+    "picture": "https://picsum.photos/200/300?random=12"
   }
 ]

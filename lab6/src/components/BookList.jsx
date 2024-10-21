@@ -1,7 +1,9 @@
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardContent, Typography, Grid, Button, Box, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Card, CardContent, Typography, Grid, Button, Box, TextField, CardMedia } from '@mui/material';
 import { Link } from 'react-router-dom';
+import CustomSelect from './CustomSelect.jsx';
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -24,6 +26,19 @@ const BookList = () => {
     fetchBooks();
   }, [searchTerm, filter, order]);
 
+  const filterItems = [
+    { value: '', label: 'None' },
+    { value: 'title', label: 'Title' },
+    { value: 'price', label: 'Price' },
+    { value: 'pages', label: 'Pages' },
+    { value: 'author', label: 'Author' }
+  ];
+
+  const orderItems = [
+    { value: 'asc', label: 'Ascending' },
+    { value: 'desc', label: 'Descending' }
+  ];
+
   return (
     <div className="book-list">
       <Typography variant="h2" gutterBottom>
@@ -38,28 +53,30 @@ const BookList = () => {
           onChange={e => setSearchTerm(e.target.value)}
           sx={{ marginRight: '16px' }}
         />
-        <FormControl variant="outlined" size="small">
-          <InputLabel>Filter</InputLabel>
-          <Select value={filter} onChange={e => setFilter(e.target.value)} label="Filter">
-            <MenuItem value="">None</MenuItem>
-            <MenuItem value="title">Title</MenuItem>
-            <MenuItem value="price">Price</MenuItem>
-            <MenuItem value="pages">Pages</MenuItem>
-            <MenuItem value="author">Author</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl variant="outlined" size="small">
-          <InputLabel>Order</InputLabel>
-          <Select value={order} onChange={e => setOrder(e.target.value)} label="Order">
-            <MenuItem value="asc">Ascending</MenuItem>
-            <MenuItem value="desc">Descending</MenuItem>
-          </Select>
-        </FormControl>
+        <CustomSelect
+          value={filter}
+          onChange={e => setFilter(e.target.value)}
+          label="Filter"
+          items={filterItems}
+          sx={{ minWidth: 150, marginRight: '16px' }}
+        />
+        <CustomSelect
+          value={order}
+          onChange={e => setOrder(e.target.value)}
+          label="Order"
+          items={orderItems}
+        />
       </Box>
       <Grid container spacing={4}>
         {books.map((book) => (
           <Grid item xs={12} sm={6} md={4} key={book.id}>
             <Card>
+              <CardMedia
+                component="img"
+                height="140"
+                image={book.picture}
+                alt={book.title}
+              />
               <CardContent>
                 <Typography variant="h6">{book.title}</Typography>
                 <Typography color="textSecondary">By: {book.author}</Typography>
