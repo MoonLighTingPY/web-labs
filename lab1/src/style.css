@@ -1,0 +1,30 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@font-face {
+  font-family: "Gilroy";
+  local: "Trickster";
+  /* src: url("../fonts/Gilroy-Regular.ttf"); */
+  src: url("./fonts/Gilroy-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+/* @font-face {
+  font-family: "Gilroy";
+  src: url("../fonts/Gilroy-Medium.ttf");
+  font-weight: medium;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url("../fonts/Gilroy-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+} */
+
+body {
+  /* font-family: "Gilroy", sans-serif; */
+  font-family: "Arial", sans-serif;
+  font-family: sans-serif;
+}

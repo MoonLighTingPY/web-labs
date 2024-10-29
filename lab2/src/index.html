@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relationz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="font-gilroy">
+    <!--   <header
+      class="max-w-6xl mx-auto w-full px-4 flex justify-between items-center h-20"
+    >
+      <div class="h-14 flex items-center gap-10">
+        <a class="text-2xl font-bold font-gilroy" href="index.html"
+          >Relationz</a
+        >
+        <a class="font-semibold text-sm" href="index.html">Login</a>
+      </div>
+      <div class="h-14 flex gap-24">
+        <div class="md:flex hidden gap-8 items-center text-sm">
+          <a class="font-semibold" href="index.html">Services</a>
+          <a class="font-semibold" href="index.html">Enteprize</a>
+          <a class="font-semibold" href="index.html">Pricing</a>
+        </div>
+
+        <a
+          class="text-blue-600 rounded-full border-2 border-blue-600 px-7 py-3 w-full flex items-center"
+          href="index.html"
+        >
+          <button>Try it for free</button>
+        </a>
+      </div>
+    </header> -->
+
+    <nav
+      class="relative px-4 py-4 flex justify-between items-center max-w-6xl mx-auto w-full"
+    >
+      <div class="h-14 flex items-center gap-10">
+        <a class="text-2xl font-bold font-gilroy" href="index.html"
+          >Relationz</a
+        >
+        <a class="font-semibold text-sm hidden lg:block" href="index.html"
+          >Login</a
+        >
+      </div>
+      <div class="lg:hidden">
+        <button class="navbar-burger flex items-center text-blue-600 p-3">
+          <svg
+            class="block h-4 w-4 fill-current"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>Mobile menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+          </svg>
+        </button>
+      </div>
+      <ul
+        class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6"
+      >
+        <li>
+          <a class="text-sm text-gray-400 hover:text-gray-600" href="#"
+            >Services</a
+          >
+        </li>
+
+        <li>
+          <a class="text-sm text-gray-400 hover:text-gray-600" href="#"
+            >Enteprize</a
+          >
+        </li>
+
+        <li>
+          <a class="text-sm text-gray-400 hover:text-gray-600" href="#"
+            >Pricing</a
+          >
+        </li>
+      </ul>
+      <a
+        class="hover:text-white hover:bg-blue-600 text-blue-600 rounded-full border-2 border-blue-600 px-7 py-3 w-48 hidden lg:flex items-center justify-center transition-all duration-500"
+        href="index.html"
+      >
+        <button>Try it for free</button>
+      </a>
+    </nav>
+    <div class="navbar-menu relative z-50 hidden">
+      <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
+      <nav
+        class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto"
+      >
+        <div class="flex items-center mb-8">
+          <a class="text-2xl font-bold font-gilroy mr-auto" href="index.html"
+            >Relationz
+          </a>
+
+          <button class="navbar-close">
+            <svg
+              class="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div>
+          <ul>
+
+            <li class="mb-1">
+              <a
+                class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                href="#"
+                >Services</a
+              >
+            </li>
+              <li class="mb-1"></li>
+              <a
+                class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                href="#"
+                >Enteprize</a
+              >
+            </li>
+            <li class="mb-1">
+              <a
+                class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                href="#"
+                >Pricing</a
+              >
+            </li>
+
+          </ul>
+        </div>
+        <div class="mt-auto">
+          <div class="pt-6">
+            <a
+              class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl"
+              href="#"
+              >Sign in</a
+            >
+            <a
+              class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl"
+              href="#"
+              >Sign Up</a
+            >
+          </div>
+          <p class="my-4 text-xs text-center text-gray-400">
+            <span>Copyright © 2021</span>
+          </p>
+        </div>
+      </nav>
+    </div>
+
+    <main>
+      <section
+        class="max-w-6xl mx-auto w-full px-4 flex justify-between items-center gap-24 mt-12 md:mt-24"
+      >
+        <div class="space-y-4">
+          <h1 class="font-bold text-4xl md:text-6xl leading-tight">
+            Take your relationships to the next level
+          </h1>
+          <p class="font-medium text-base text-[#73738D]">
+            The multichannel sales engagement platform which automates personal
+            email outreach, calls, and tasks, while Sales can focus on what
+            really matters - closing deals.
+          </p>
+          <div class="w-full relative space-y-3 md:space-y-0">
+            <form action="/submit-email" method="POST" class="relative w-full">
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                class="border border-neutral-100 rounded-full w-full h-16 px-4 py-2 pr-52 shadow-md"
+                required
+              />
+              <button
+                type="submit"
+                class="bg-blue-600 text-white rounded-full px-7 py-3 flex items-center justify-center absolute right-0 top-0 mt-2 mr-2"
+              >
+                Try it for free
+              </button>
+            </form>
+          </div>
+        </div>
+        <img
+          src="./hero image.png"
+          class="h-full hidden md:block max-h-[40em]"
+        />
+      </section>
+
+      <section
+        class="max-w-6xl mx-auto w-full px-4 justify-between items-center mt-12 md:mt-40 grid md:grid-cols-2 gap-x-24 gap-y-12"
+      >
+        <div class="flex flex-col col-span gap-6 justify-evenly h-full">
+          <h2 class="font-bold text-3xl md:text-4xl">
+            Get reminders to follow up
+          </h2>
+          <p class="font-medium text-[#73738D] leading-snug text-lg">
+            We remind you of everything important and track everything that’s
+            important to your important ones so you always stay connected. We
+            only tell you the details when you need them the most.
+          </p>
+          <div class="grid grid-cols-2 gap-4">
+            <p class="flex gap-3 text-[#73738D]">
+              <img src="./check.svg" class="w-6 h-6" />
+              Birthdays
+            </p>
+            <p class="flex gap-3 text-[#73738D]">
+              <img src="./check.svg" class="w-6 h-6" />
+              Business Meetings
+            </p>
+            <p class="flex gap-3 text-[#73738D]">
+              <img src="./check.svg" class="w-6 h-6" />
+              Friends & Family
+            </p>
+            <p class="flex gap-3 text-[#73738D]">
+              <img src="./check.svg" class="w-6 h-6" />
+              Surroundings
+            </p>
+          </div>
+        </div>
+        <div class="flex col-span-1 gap-6 flex-col md:order-first">
+          <div class="rounded-2xl p-5 w-full shadow-md flex gap-3">
+            <img src="./avatar1.png" class="w-12 h-12" />
+            <p class="text-sm">
+              You have a meeting with
+              <span class="font-semibold"> Surbhi </span>
+              to help her with her portfolio. She got a new pet (Dog named
+              Tiger).
+            </p>
+          </div>
+          <div class="rounded-2xl p-5 w-full shadow-md flex gap-3">
+            <img src="./avatar2.png" class="w-12 h-12" />
+            <p class="text-sm">
+              <span class="font-semibold"> Ripal </span>
+              has recently been to Thailand and she wants to discuss about new
+              Job opportunity.
+            </p>
+          </div>
+          <div class="rounded-2xl p-5 w-full shadow-md flex gap-3">
+            <img src="./avatar3.png" class="w-12 h-12" />
+            <div class="flex flex-col">
+              <p class="text-sm">
+                <span class="font-semibold"> Prashasti </span>
+                hasn’t responded to your Email from 22 Jan, 2020
+              </p>
+              <p class="font-semibold text-sm">
+                Want to check up on her?
+                <a
+                  class="text-green-500 decoration-transparent"
+                  href="https://google.com"
+                >
+                  Follow up
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="max-w-6xl mx-auto w-full px-4 justify-between items-center mt-12 md:mt-40 grid md:grid-cols-2 gap-x-24 gap-y-10"
+      >
+        <div class="rounded-full bg-[#E4F7F2] p-3 md:p-5 w-fit col-span-full">
+          <img src="./round.svg" alt="round" class="h-6 w-6 md:h-10 md:w-10" />
+        </div>
+        <div class="flex flex-col col-span gap-6 justify-evenly h-full">
+          <h2 class="font-bold text-2xl md:text-4xl">
+            Our sync remembers everything
+          </h2>
+          <p class="font-medium text-[#73738D] leading-snug text-lg">
+            We build a huge databasse of all your contacts with all the possible
+            details they share with you and you can access it anywhere, anytime.
+            It’s works so well that you will love it like we do.
+          </p>
+          <div class="grid grid-cols-2 gap-4">
+            <p
+              class="flex gap-3 text-[#73738D] text-sm md:text-base items-center"
+            >
+              <img src="./check.svg" class="w-3 md:w-5 h-3 md:h-5" />
+              Available on devices
+            </p>
+            <p
+              class="flex gap-3 text-[#73738D] text-sm md:text-base items-center"
+            >
+              <img src="./check.svg" class="w-3 md:w-5 h-3 md:h-5" />
+              Can be accesed via phonebook
+            </p>
+            <p
+              class="flex gap-3 text-[#73738D] text-sm md:text-base items-center"
+            >
+              <img src="./check.svg" class="w-3 md:w-5 h-3 md:h-5" />
+              Search details
+            </p>
+            <p
+              class="flex gap-3 text-[#73738D] text-sm md:text-base items-center"
+            >
+              <img src="./check.svg" class="w-3 md:w-5 h-3 md:h-5" />
+              24/7 Support
+            </p>
+          </div>
+        </div>
+        <div class="cols-span-1 p-6 shadow-md rounded-2xl flex flex-col gap-10">
+          <div class="flex gap-6 w-full">
+            <img src="./avatar4.png" class="w-14 h-14" />
+            <div class="">
+              <p class="font-semibold text-xl">Archana Deshmukh</p>
+              <p>Product Design Consultant</p>
+            </div>
+          </div>
+          <div class="space-y-6">
+            <div class="flex gap-6 items-center">
+              <img src="./cake.svg" class="w-6 h-6" />
+
+              <p class="text-[#73738D]">17 April, 1994</p>
+            </div>
+            <div class="flex gap-6 items-center">
+              <img src="./job.svg" class="w-6 h-6" />
+
+              <p class="text-[#73738D]">Product Design Consultant</p>
+            </div>
+            <div class="flex gap-6 items-center">
+              <img src="./mark.svg" class="w-6 h-6" />
+
+              <p class="text-[#73738D]">
+                Went to Amsterdam with parents to visit her brother.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="max-w-6xl mx-auto w-full px-4 justify-between items-center mt-20 md:mt-40 grid md:grid-cols-2 gap-x-24 gap-y-10"
+      >
+        <div class="col-span-1"></div>
+
+        <div class="rounded-full bg-[#E4F7F2] p-3 md:p-5 w-fit col-span-1">
+          <img src="./atoms.svg" alt="round" class="h-6 w-6 md:h-10 md:w-10" />
+        </div>
+
+        <div class="cols-span-1 p-6 shadow-md rounded-2xl flex flex-col">
+          <div class="flex justify-between w-full">
+            <h3 class="font-semibold text-xl">Send content around anxiety</h3>
+            <img src="./dots.svg" alt="dots" class="w-5 h-5" />
+          </div>
+          <p>3 people on the list</p>
+          <p class="text-[#73738D] mt-6">
+            We all worry and get upset from time to time. It’s a normal part of
+            life, right? But what happens when that anxiety or anger takes over,
+            and you can’t calm down? Being able to calm yourself in the mome...
+          </p>
+        </div>
+
+        <div class="flex flex-col col-span gap-6 justify-evenly h-full">
+          <h2 class="font-bold text-2xl md:text-4xl">
+            Stay connected in a few clicks
+          </h2>
+          <p class="font-medium text-[#73738D] leading-snug text-lg">
+            The multichannel sales engagement platform which automates personal
+            email outreach, calls, and tasks, while Sales can focus on what
+            really matters - closing
+          </p>
+        </div>
+      </section>
+
+      <section class="max-w-6xl mx-auto w-full px-4 mt-20">
+        <div
+          class="shadow-md rounded-2xl flex flex-wrap gap-5 justify-between items-center p-8"
+        >
+          <div>
+            <h4 class="font-bold text-2xl md:text-4xl">
+              Form better relationships with everyone
+            </h4>
+            <p class="text-[#73738D] mt-1">Start your free 14 days trial.</p>
+          </div>
+          <a
+            class="hover:text-[#26C296] hover:bg-white border-2 border-[#26C296] text-white rounded-full bg-[#26C296] px-7 py-3 w-48 flex items-center text-center justify-center transition duration-500"
+            href="index.html"
+          >
+            <button>Try it for free</button>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="mx-auto space-y-3 md:space-y-6 p-6 md:p-10 flex items-center justify-center flex-col"
+    >
+      <p class="font-bold md:text-xl">Relations</p>
+      <p class="text-xs md:text-base">
+        Copyright © 2010 - 2019 Relationz Ltd. All rights reserved.
+      </p>
+    </footer>
+
+    <script>
+      // Burger menus
+      document.addEventListener("DOMContentLoaded", function () {
+        // open
+        const burger = document.querySelectorAll(".navbar-burger");
+        const menu = document.querySelectorAll(".navbar-menu");
+
+        if (burger.length && menu.length) {
+          for (var i = 0; i < burger.length; i++) {
+            burger[i].addEventListener("click", function () {
+              for (var j = 0; j < menu.length; j++) {
+                menu[j].classList.toggle("hidden");
+              }
+            });
+          }
+        }
+
+        // close
+        const close = document.querySelectorAll(".navbar-close");
+        const backdrop = document.querySelectorAll(".navbar-backdrop");
+
+        if (close.length) {
+          for (var i = 0; i < close.length; i++) {
+            close[i].addEventListener("click", function () {
+              for (var j = 0; j < menu.length; j++) {
+                menu[j].classList.toggle("hidden");
+              }
+            });
+          }
+        }
+
+        if (backdrop.length) {
+          for (var i = 0; i < backdrop.length; i++) {
+            backdrop[i].addEventListener("click", function () {
+              for (var j = 0; j < menu.length; j++) {
+                menu[j].classList.toggle("hidden");
+              }
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
