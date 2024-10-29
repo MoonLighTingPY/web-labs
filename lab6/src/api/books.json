@@ -7,7 +7,17 @@
     "pages": 300,
     "category": "Historical",
     "price": 1488,
-    "picture": "https://picsum.photos/200/300?random=1"
+    "picture": "https://picsum.photos/id/1/200/300",
+    "colors": [
+      "red",
+      "blue",
+      "green"
+    ],
+    "stock": {
+      "red": 0,
+      "blue": 0,
+      "green": 0
+    }
   },
   {
     "id": 2,
@@ -17,7 +27,17 @@
     "pages": 111,
     "category": "Fiction",
     "price": 1337,
-    "picture": "https://picsum.photos/200/300?random=2"
+    "picture": "https://picsum.photos/id/2/200/300",
+    "colors": [
+      "black",
+      "gold",
+      "silver"
+    ],
+    "stock": {
+      "black": 0,
+      "gold": 3,
+      "silver": 15
+    }
   },
   {
     "id": 3,
@@ -27,7 +47,17 @@
     "pages": 450,
     "category": "Historical Fiction",
     "price": 1299,
-    "picture": "https://picsum.photos/200/300?random=3"
+    "picture": "https://picsum.photos/id/3/200/300",
+    "colors": [
+      "gray",
+      "silver",
+      "white"
+    ],
+    "stock": {
+      "gray": 6,
+      "silver": 4,
+      "white": 2
+    }
   },
   {
     "id": 4,
@@ -37,7 +67,17 @@
     "pages": 320,
     "category": "Historical",
     "price": 1599,
-    "picture": "https://picsum.photos/200/300?random=4"
+    "picture": "https://picsum.photos/id/4/200/300",
+    "colors": [
+      "brown",
+      "green",
+      "beige"
+    ],
+    "stock": {
+      "brown": 3,
+      "green": 3,
+      "beige": 2
+    }
   },
   {
     "id": 5,
@@ -47,7 +87,17 @@
     "pages": 275,
     "category": "Drama",
     "price": 999,
-    "picture": "https://picsum.photos/200/300?random=5"
+    "picture": "https://picsum.photos/id/5/200/300",
+    "colors": [
+      "purple",
+      "black",
+      "gray"
+    ],
+    "stock": {
+      "purple": 2,
+      "black": 2,
+      "gray": 1
+    }
   },
   {
     "id": 6,
@@ -57,7 +107,17 @@
     "pages": 210,
     "category": "Thriller",
     "price": 899,
-    "picture": "https://picsum.photos/200/300?random=6"
+    "picture": "https://picsum.photos/id/6/200/300",
+    "colors": [
+      "red",
+      "yellow",
+      "orange"
+    ],
+    "stock": {
+      "red": 1,
+      "yellow": 1,
+      "orange": 1
+    }
   },
   {
     "id": 7,
@@ -67,7 +127,17 @@
     "pages": 390,
     "category": "Political Fiction",
     "price": 1399,
-    "picture": "https://picsum.photos/200/300?random=7"
+    "picture": "https://picsum.photos/id/7/200/300",
+    "colors": [
+      "dark blue",
+      "white",
+      "black"
+    ],
+    "stock": {
+      "dark blue": 4,
+      "white": 3,
+      "black": 2
+    }
   },
   {
     "id": 8,
@@ -77,7 +147,17 @@
     "pages": 500,
     "category": "Fantasy",
     "price": 1799,
-    "picture": "https://picsum.photos/200/300?random=8"
+    "picture": "https://picsum.photos/id/8/200/300",
+    "colors": [
+      "green",
+      "brown",
+      "gold"
+    ],
+    "stock": {
+      "green": 8,
+      "brown": 6,
+      "gold": 3
+    }
   },
   {
     "id": 9,
@@ -87,7 +167,17 @@
     "pages": 280,
     "category": "Romance",
     "price": 1099,
-    "picture": "https://picsum.photos/200/300?random=9"
+    "picture": "https://picsum.photos/id/9/200/300",
+    "colors": [
+      "pink",
+      "white",
+      "lavender"
+    ],
+    "stock": {
+      "pink": 2,
+      "white": 3,
+      "lavender": 1
+    }
   },
   {
     "id": 10,
@@ -97,7 +187,17 @@
     "pages": 350,
     "category": "Mystery",
     "price": 1299,
-    "picture": "https://picsum.photos/200/300?random=10"
+    "picture": "https://picsum.photos/id/10/200/300",
+    "colors": [
+      "dark gray",
+      "light gray",
+      "black"
+    ],
+    "stock": {
+      "dark gray": 4,
+      "light gray": 4,
+      "black": 3
+    }
   },
   {
     "id": 11,
@@ -107,7 +207,17 @@
     "pages": 315,
     "category": "Literary Fiction",
     "price": 1199,
-    "picture": "https://picsum.photos/200/300?random=11"
+    "picture": "https://picsum.photos/id/11/200/300",
+    "colors": [
+      "yellow",
+      "orange",
+      "brown"
+    ],
+    "stock": {
+      "yellow": 1,
+      "orange": 2,
+      "brown": 1
+    }
   },
   {
     "id": 12,
@@ -117,6 +227,16 @@
     "pages": 450,
     "category": "Thriller",
     "price": 1499,
-    "picture": "https://picsum.photos/200/300?random=12"
+    "picture": "https://picsum.photos/id/12/200/300",
+    "colors": [
+      "gold",
+      "silver",
+      "white"
+    ],
+    "stock": {
+      "gold": 6,
+      "silver": 4,
+      "white": 3
+    }
   }
 ]

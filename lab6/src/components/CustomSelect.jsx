@@ -1,9 +1,9 @@
-import React from 'react';
+// src/components/CustomSelect.jsx
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 const CustomSelect = ({ value, onChange, label, items, sx }) => {
   return (
-    <FormControl variant="outlined" size="small" sx={sx}>
+    <FormControl variant="outlined" size="small" sx={{ minWidth: 120, ...sx }}>
       <InputLabel>{label}</InputLabel>
       <Select value={value} onChange={onChange} label={label}>
         {items.map((item) => (

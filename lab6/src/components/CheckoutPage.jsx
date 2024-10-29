@@ -1,12 +1,14 @@
 // src/components/CheckoutPage.jsx
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, TextField, Box } from '@mui/material';
+import { Button, TextField, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import ErrorMessage from './ErrorMessage';
+import { useDispatch } from 'react-redux';
+import { clearCart } from '../redux/cartSlice';
 
 function CheckoutPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -24,92 +26,37 @@ function CheckoutPage() {
       address: Yup.string().required('Address is required'),
     }),
     onSubmit: (values) => {
-      // Handle form submission
-      console.log(values);
+      dispatch(clearCart());
       navigate('/success');
     },
   });
 
   return (
-    <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
-      <TextField
-        fullWidth
-        variant="outlined"
-        id="firstName"
-        name="firstName"
-        label="First Name"
-        value={formik.values.firstName}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-        sx={{ mt: 2 }}
-      />
-      {formik.touched.firstName && formik.errors.firstName && (
-        <ErrorMessage message={formik.errors.firstName} />
-      )}
-      <TextField
-        fullWidth
-        variant="outlined"
-        id="lastName"
-        name="lastName"
-        label="Last Name"
-        value={formik.values.lastName}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-        sx={{ mt: 2 }}
-      />
-      {formik.touched.lastName && formik.errors.lastName && (
-        <ErrorMessage message={formik.errors.lastName} />
-      )}
-      <TextField
-        fullWidth
-        variant="outlined"
-        id="email"
-        name="email"
-        label="Email"
-        value={formik.values.email}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.email && Boolean(formik.errors.email)}
-        sx={{ mt: 2 }}
-      />
-      {formik.touched.email && formik.errors.email && (
-        <ErrorMessage message={formik.errors.email} />
-      )}
-      <TextField
-        fullWidth
-        variant="outlined"
-        id="phone"
-        name="phone"
-        label="Phone Number"
-        value={formik.values.phone}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.phone && Boolean(formik.errors.phone)}
-        sx={{ mt: 2 }}
-      />
-      {formik.touched.phone && formik.errors.phone && (
-        <ErrorMessage message={formik.errors.phone} />
-      )}
-      <TextField
-        fullWidth
-        variant="outlined"
-        id="address"
-        name="address"
-        label="Address"
-        value={formik.values.address}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.address && Boolean(formik.errors.address)}
-        sx={{ mt: 2 }}
-      />
-      {formik.touched.address && formik.errors.address && (
-        <ErrorMessage message={formik.errors.address} />
-      )}
-      <Button color="primary" variant="contained" fullWidth type="submit" sx={{ mt: 3 }}>
-        Continue
-      </Button>
+    <Box className="container">
+      <Typography className="form-title" variant="h4">
+        Checkout
+      </Typography>
+      <Box component="form" onSubmit={formik.handleSubmit}>
+        {['firstName', 'lastName', 'email', 'phone', 'address'].map((field, index) => (
+          <TextField
+            key={index}
+            fullWidth
+            variant="outlined"
+            id={field}
+            name={field}
+            label={field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+            value={formik.values[field]}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched[field] && Boolean(formik.errors[field])}
+            helperText={formik.touched[field] && formik.errors[field]}
+            sx={{ mt: 2 }}
+          />
+        ))}
+        <Button type="submit" variant="contained" color="primary">
+          Continue
+        </Button>
+      </Box>
     </Box>
   );
 }

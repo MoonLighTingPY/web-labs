@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardContent, Typography, Grid, Button, Box, TextField, CardMedia } from '@mui/material';
+import { Card, CardContent, Typography, Grid, Button, Box, TextField, CardMedia, Chip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CustomSelect from './CustomSelect.jsx';
 
@@ -53,35 +52,45 @@ const BookList = () => {
           onChange={e => setSearchTerm(e.target.value)}
           sx={{ marginRight: '16px' }}
         />
-        <CustomSelect
-          value={filter}
-          onChange={e => setFilter(e.target.value)}
-          label="Filter"
-          items={filterItems}
-          sx={{ minWidth: 150, marginRight: '16px' }}
-        />
-        <CustomSelect
-          value={order}
-          onChange={e => setOrder(e.target.value)}
-          label="Order"
-          items={orderItems}
-        />
+        <Box display="flex" justifyContent="space-between" mb={4}>
+          <CustomSelect
+            value={filter}
+            onChange={e => setFilter(e.target.value)}
+            label="Filter"
+            items={filterItems}
+            sx={{ minWidth: 150, marginRight: '16px' }}
+          />
+          <CustomSelect
+            value={order}
+            onChange={e => setOrder(e.target.value)}
+            label="Order"
+            items={orderItems}
+          />
+        </Box>
       </Box>
       <Grid container spacing={4}>
         {books.map((book) => (
           <Grid item xs={12} sm={6} md={4} key={book.id}>
-            <Card>
+            <Card sx={{ borderRadius: '16px 16px 0 0', boxShadow: 'none', position: 'relative' }}>
               <CardMedia
                 component="img"
-                height="140"
+                height="200"
                 image={book.picture}
                 alt={book.title}
+                sx={{ borderRadius: '16px 16px 0 0' }}
               />
               <CardContent>
                 <Typography variant="h6">{book.title}</Typography>
                 <Typography color="textSecondary">By: {book.author}</Typography>
                 <Typography>Pages: {book.pages}</Typography>
                 <Typography>Price: ${book.price}</Typography>
+                {Object.values(book.stock).every(stock => stock <= 0) && (
+                  <Chip
+                    label="Out of Stock"
+                    color="error"
+                    sx={{ position: 'absolute', top: 16, right: 16 }}
+                  />
+                )}
                 <Button component={Link} to={`/books/${book.id}`} variant="outlined" sx={{ mt: 2 }}>
                   View More
                 </Button>
