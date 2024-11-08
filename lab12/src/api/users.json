@@ -1,0 +1,25 @@
+[
+  {
+    "username": "mlting47",
+    "email": "romanfigelo@gmail.com",
+    "password": "12345678"
+  },
+  {
+    "username": "123",
+    "email": "romanfigelo1@gmail.com",
+    "password": "11111111",
+    "confirmPassword": "11111111"
+  },
+  {
+    "username": "11322",
+    "email": "roman.fihel.ir.2023@lpnu.ua",
+    "password": "11111111",
+    "confirmPassword": "11111111"
+  },
+  {
+    "username": "mlting48",
+    "email": "romanfigeloo@gmail.com",
+    "password": "11111111",
+    "confirmPassword": "11111111"
+  }
+]
