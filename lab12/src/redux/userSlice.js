@@ -1,12 +1,15 @@
 // src/redux/userSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { clearCart } from './cartSlice';
 import axios from 'axios';
+
 
 // Async thunk for logging in the user
 export const loginUser = createAsyncThunk('user/loginUser', async (credentials, { rejectWithValue }) => {
   try {
     const response = await axios.post('/api/login', credentials);
-    return response.data;
+    const cartResponse = await axios.get(`/api/cart/${response.data.userId}`);
+    return { ...response.data, cart: cartResponse.data };
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
@@ -73,6 +76,7 @@ const userSlice = createSlice({
           name: action.payload.name,
           username: action.payload.username,
         };
+        state.cart = action.payload.cart;
         state.loginError = null;
         console.log('User state after login:', state.user); // Log user state
       })
@@ -80,6 +84,12 @@ const userSlice = createSlice({
         state.isAuthenticated = false;
         state.user = null;
         state.loginError = action.payload;
+      })
+      .addCase(logoutUser, (state) => {
+        state.isAuthenticated = false;
+        state.user = null;
+        state.cart = [];
+        clearCart(state);
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload;

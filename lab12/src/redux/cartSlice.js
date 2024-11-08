@@ -65,8 +65,13 @@ const cartSlice = createSlice({
       saveCart(newState);
       return newState;
     },
+    clearCart: (state) => {
+      if (!Array.isArray(state)) return []; // Ensure state is an array
+      saveCart([]);
+      return [];
   },
-});
+}});
+
 
 export const { addToCart, incrementQuantity, decrementQuantity, removeFromCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

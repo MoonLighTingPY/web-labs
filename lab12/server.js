@@ -140,6 +140,17 @@ app.post('/api/update-stock', async (req, res) => {
   res.status(200).send({ message: 'Stock updated successfully' });
 });
 
+app.get('/api/cart/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const [cartRows] = await db.promise().query('SELECT * FROM cart WHERE user_id = ?', [userId]);
+    res.status(200).json(cartRows);
+  } catch (error) {
+    console.error('Error fetching cart items:', error);
+    res.status(500).json({ error: 'Database error' });
+  }
+});
+
 app.post('/api/saveCart', async (req, res) => {
   const { userId, cartItems } = req.body;
 
