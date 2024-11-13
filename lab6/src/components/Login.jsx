@@ -65,7 +65,7 @@ const Login = () => {
       />
       {loginError && (
         <Typography color="error" sx={{ mt: 2 }}>
-          {loginError}
+          {loginError.message}
         </Typography>
       )}
       <Button color="primary" variant="contained" fullWidth type="submit" sx={{ mt: 3 }} onClick={() => handleLogin(formik.values)}>
