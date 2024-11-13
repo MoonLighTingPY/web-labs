@@ -1,8 +1,5 @@
 import express, { json } from 'express';
 import cors from 'cors';
-import { readFile, writeFile } from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import process from 'process';
 
 import bcrypt from 'bcrypt';
@@ -24,10 +21,6 @@ const db = mysql.createPool({
   queueLimit: 0
 });
 
-
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 async function getBooks() {
   const query = `
@@ -62,11 +55,6 @@ async function getBooks() {
   return books;
 }
 
-const getUsers = async () => {
-  const filePath = path.join(__dirname, 'src/api/users.json');
-  const data = await readFile(filePath, 'utf8');
-  return JSON.parse(data);
-};
 
 
 app.post('/api/register', async (req, res) => {
@@ -85,30 +73,41 @@ app.post('/api/register', async (req, res) => {
   });
 });
 
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
-  const query = 'SELECT * FROM users WHERE email = ?';
-  db.query(query, [email], async (err, results) => {
-    if (err) return res.status(500).json({ error: 'Database error' });
-    if (results.length === 0) return res.status(400).json({ error: 'Invalid email or password' });
+  try {
+    const [userResults] = await db.promise().query('SELECT * FROM users WHERE email = ?', [email]);
+    if (userResults.length === 0) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
 
-    const user = results[0];
+    const user = userResults[0];
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) return res.status(400).json({ error: 'Invalid email or password' });
+    if (!isPasswordValid) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
 
-    res.json({ email: user.email, name: user.name, username: user.username });
-  });
+    const [cartRows] = await db.promise().query('SELECT * FROM cart WHERE user_id = ?', [user.id]);
+    res.json({ email: user.email, name: user.name, username: user.username, cart: cartRows });
+    console.log('User logged in:', user.email);
+    console.log('Cart items:', cartRows);
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({ error: 'Database error' });
+  }
 });
 
-app.post('/api/checkUserExists', async (req, res) => {
-  const { email, username } = req.body;
-  const users = await getUsers();
-  const userExists = users.some(user => user.email === email || user.username === username);
-  res.json({ exists: userExists });
+
+app.post('/api/getUserId', async (req, res) => {
+  const { email } = req.body;
+  console.log('Received email:', email);
+  const [rows] = await db.promise().query('SELECT id FROM users WHERE email = ?', [email]);
+  if (rows.length === 0) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  res.json({ userId: rows[0].id });
 });
-
-
 
 app.get('/api/books', async (req, res) => {
   const { search, filter, order } = req.query;

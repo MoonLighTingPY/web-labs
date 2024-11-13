@@ -1,7 +1,6 @@
 // src/components/Header.jsx
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../redux/userSlice';
-import { clearCart } from '../redux/cartSlice';
 import { AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -11,7 +10,6 @@ function Header() {
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    dispatch(clearCart());
   };
 
   return (

@@ -8,6 +8,7 @@ import { Add, Remove, Delete } from '@mui/icons-material';
 
 const CartPage = () => {
   const cart = useSelector((state) => Array.isArray(state.cart) ? state.cart : []); // Ensure cart is an array
+  const email = useSelector((state) => state.user.user?.email);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState('');
@@ -21,7 +22,7 @@ const CartPage = () => {
   const handleIncrement = (item) => {
     const cartItem = cart.find(cartItem => cartItem.id === item.id && cartItem.color === item.color);
     if (cartItem && cartItem.quantity < item.stock) {
-      dispatch(incrementQuantity({ id: item.id, color: item.color, stock: item.stock }));
+      dispatch(incrementQuantity({ id: item.id, color: item.color, stock: item.stock, email }));
       setFeedback('');
     } else {
       setFeedback(`Cannot add more of ${item.title} in ${item.color} than is in stock.`);
@@ -29,7 +30,7 @@ const CartPage = () => {
   };
 
   const handleDecrement = (item) => {
-    dispatch(decrementQuantity({ id: item.id, color: item.color }));
+    dispatch(decrementQuantity({ id: item.id, color: item.color, email }));
     setFeedback('');
   };
 

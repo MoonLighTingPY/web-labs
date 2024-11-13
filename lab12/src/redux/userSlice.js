@@ -8,8 +8,7 @@ import axios from 'axios';
 export const loginUser = createAsyncThunk('user/loginUser', async (credentials, { rejectWithValue }) => {
   try {
     const response = await axios.post('/api/login', credentials);
-    const cartResponse = await axios.get(`/api/cart/${response.data.userId}`);
-    return { ...response.data, cart: cartResponse.data };
+    return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
@@ -35,13 +34,15 @@ export const saveCart = createAsyncThunk('user/saveCart', async (cartData, { rej
   }
 });
 
-export const checkUserExists = createAsyncThunk(
-  'user/checkUserExists',
-  async ({ email, username }) => {
-    const response = await axios.post('/api/checkUserExists', { email, username });
-    return response.data.exists;
+// Async thunk for checking the user's ID and existence
+export const getUserId = createAsyncThunk('user/getUserId', async (email, { rejectWithValue }) => {
+  try {
+    const response = await axios.post('/api/getUserId', { email });
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
   }
-);
+});
 
 export const loginError = (state) => state.user.loginError;
 
@@ -76,9 +77,7 @@ const userSlice = createSlice({
           name: action.payload.name,
           username: action.payload.username,
         };
-        state.cart = action.payload.cart;
         state.loginError = null;
-        console.log('User state after login:', state.user); // Log user state
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isAuthenticated = false;
@@ -103,7 +102,7 @@ const userSlice = createSlice({
           state.registerError = action.payload.error;
         }
       })
-      .addCase(checkUserExists.fulfilled, (state, action) => {
+      .addCase(getUserId.fulfilled, (state, action) => {
         state.userExists = action.payload;
       })
       .addCase(saveCart.fulfilled, (state, action) => {

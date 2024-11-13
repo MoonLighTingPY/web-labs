@@ -1,23 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const saveCart = async (cart) => {
-  try {
-    const userId = 1; // Replace with actual user ID
-    const payload = {
-      userId,
-      cartItems: cart.map(item => ({
-        bookId: item.id,
-        quantity: item.quantity,
-        color: item.color
-      }))
-    };
-    console.log('Saving cart with payload:', payload);
-    await axios.post('/api/saveCart', payload);
-  } catch (error) {
-    console.error('Error saving cart:', error);
-  }
-};
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -26,7 +7,6 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       if (!Array.isArray(state)) return [];
       const { id, color, quantity, stock } = action.payload;
-      console.log('Adding to cart:', action.payload);
       const existingItem = state.find(item => item.id === id && item.color === color);
       if (existingItem) {
         if (existingItem.quantity + quantity <= stock) {
@@ -41,7 +21,6 @@ const cartSlice = createSlice({
           console.log('Stock limit exceeded');
         }
       }
-      saveCart(state);
     },
     incrementQuantity: (state, action) => {
       if (!Array.isArray(state)) return []; // Ensure state is an array
@@ -51,7 +30,6 @@ const cartSlice = createSlice({
       } else {
         console.log('Stock limit exceeded');
       }
-      saveCart(state);
     },
     decrementQuantity: (state, action) => {
       if (!Array.isArray(state)) return []; // Ensure state is an array
@@ -59,21 +37,17 @@ const cartSlice = createSlice({
       if (item && item.quantity > 1) {
         item.quantity -= 1;
       }
-      saveCart(state);
     },
     removeFromCart: (state, action) => {
       if (!Array.isArray(state)) return []; // Ensure state is an array
-      const newState = state.filter(i => !(i.id === action.payload.id && i.color === action.payload.color));
-      saveCart(newState);
-      return newState;
+      return state.filter(i => !(i.id === action.payload.id && i.color === action.payload.color));
     },
     clearCart: (state) => {
       if (!Array.isArray(state)) return []; // Ensure state is an array
-      saveCart([]);
       return [];
+    },
   },
-}});
-
+});
 
 export const { addToCart, incrementQuantity, decrementQuantity, removeFromCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
