@@ -42,11 +42,12 @@ const BookDetails = () => {
     const cartItem = cart.find(item => item.id === book.id && item.color === selectedColor);
     const totalBooksInCart = cart.reduce((total, item) => total + item.quantity, 0);
     const updatedQuantity = cartItem ? cartItem.quantity + quantity : quantity;
-
+  
     if (updatedQuantity > book.stock[selectedColor]) {
       const availableColors = Object.keys(book.stock).filter(color => book.stock[color] > 0 && color !== selectedColor);
       setFeedback(`You cannot add more of this book in ${selectedColor} than is in stock. Available colors: ${availableColors.join(', ')}`);
     } else {
+      console.log('Adding to cart:', { ...book, color: selectedColor, quantity, stock: book.stock[selectedColor] });
       dispatch(addToCart({ ...book, color: selectedColor, quantity, stock: book.stock[selectedColor] }));
       setFeedback(`Book added to cart successfully! You have ${updatedQuantity} of this book in ${selectedColor} in your cart. Total books in cart: ${totalBooksInCart + quantity}`);
     }

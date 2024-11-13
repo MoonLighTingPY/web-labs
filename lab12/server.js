@@ -14,30 +14,53 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(json());
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: 'root',
   database: 'webdb',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-db.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to MySQL database');
-});
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const getBooks = () => {
-  return new Promise((resolve, reject) => {
-    const query = 'SELECT * FROM books';
-    db.query(query, (err, results) => {
-      if (err) return reject(err);
-      resolve(results);
-    });
-  });
-};
+async function getBooks() {
+  const query = `
+    SELECT 
+      b.id, b.title, b.author, b.description, b.pages, b.genre, b.price, b.image_url,
+      bs.color, bs.quantity
+    FROM books b
+    LEFT JOIN book_stock bs ON b.id = bs.book_id
+  `;
+  const [rows] = await db.promise().query(query);
+  
+  const books = rows.reduce((acc, row) => {
+    const book = acc.find(b => b.id === row.id);
+    if (book) {
+      book.stock[row.color] = row.quantity;
+    } else {
+      acc.push({
+        id: row.id,
+        title: row.title,
+        author: row.author,
+        description: row.description,
+        pages: row.pages,
+        category: row.genre,
+        price: row.price,
+        picture: row.image_url,
+        stock: { [row.color]: row.quantity }
+      });
+    }
+    return acc;
+  }, []);
+  
+  return books;
+}
 
 const getUsers = async () => {
   const filePath = path.join(__dirname, 'src/api/users.json');
@@ -108,36 +131,73 @@ app.get('/api/books', async (req, res) => {
     }
 
     res.json(books);
-  } catch (err) {
+  } catch (error) {
+    console.error('Error fetching books:', error);
     res.status(500).json({ error: 'Database error' });
   }
 });
 
 app.get('/api/books/:id', async (req, res) => {
-  const { id } = req.params;
-  const query = 'SELECT * FROM books WHERE id = ?';
-  db.query(query, [id], (err, results) => {
-    if (err) return res.status(500).json({ error: 'Database error' });
-    if (results.length === 0) return res.status(404).json({ error: 'Book not found' });
-    res.json(results[0]);
-  });
+  const bookId = req.params.id;
+  const query = `
+    SELECT 
+      b.id, b.title, b.author, b.description, b.pages, b.genre, b.price, b.image_url,
+      bs.color, bs.quantity
+    FROM books b
+    LEFT JOIN book_stock bs ON b.id = bs.book_id
+    WHERE b.id = ?
+  `;
+  const [rows] = await db.promise().query(query, [bookId]);
+  
+  if (rows.length === 0) {
+    return res.status(404).json({ message: 'Book not found' });
+  }
+
+  const book = rows.reduce((acc, row) => {
+    if (!acc) {
+      acc = {
+        id: row.id,
+        title: row.title,
+        author: row.author,
+        description: row.description,
+        pages: row.pages,
+        category: row.genre,
+        price: row.price,
+        picture: row.image_url,
+        stock: {}
+      };
+    }
+    if (row.color) {
+      acc.stock[row.color] = row.quantity;
+    }
+    return acc;
+  }, null);
+  
+  res.json(book);
 });
 
 app.post('/api/update-stock', async (req, res) => {
   const { cart } = req.body;
   let books = await getBooks();
 
-  cart.forEach(cartItem => {
+  const updateStockPromises = cart.map(cartItem => {
     const book = books.find(book => book.id === cartItem.id);
     if (book) {
-      book.stock[cartItem.color] -= cartItem.quantity;
+      const newQuantity = book.stock[cartItem.color] - cartItem.quantity;
+      return db.promise().query(
+        'UPDATE book_stock SET quantity = ? WHERE book_id = ? AND color = ?',
+        [newQuantity, cartItem.id, cartItem.color]
+      );
     }
   });
 
-  const filePath = path.join(__dirname, 'src/api/books.json');
-  await writeFile(filePath, JSON.stringify(books, null, 2), 'utf8');
-
-  res.status(200).send({ message: 'Stock updated successfully' });
+  try {
+    await Promise.all(updateStockPromises);
+    res.status(200).send({ message: 'Stock updated successfully' });
+  } catch (error) {
+    console.error('Error updating stock:', error);
+    res.status(500).json({ error: 'Database error' });
+  }
 });
 
 app.get('/api/cart/:userId', async (req, res) => {
@@ -158,47 +218,46 @@ app.post('/api/saveCart', async (req, res) => {
   console.log('Received cartItems:', cartItems);
 
   // Validate cartItems
-  if (!cartItems || !Array.isArray(cartItems) || cartItems.some(item => !item.bookId)) {
+  if (!cartItems || !Array.isArray(cartItems) || cartItems.some(item => !item.bookId || !item.color || !item.quantity)) {
+    console.log('Invalid cart items:', cartItems);
     return res.status(400).json({ error: 'Invalid cart items' });
   }
 
   // Check if userId exists in the users table
   const [userRows] = await db.promise().query('SELECT id FROM users WHERE id = ?', [userId]);
   if (userRows.length === 0) {
-    return res.status(400).json({ error: 'User ID does not exist' });
+    console.log('User not found:', userId);
+    return res.status(404).json({ error: 'User not found' });
   }
 
-  // Check if all bookIds exist in the books table
-  const bookIds = cartItems.map(item => item.bookId);
+  // Begin transaction
+  const connection = await db.promise().getConnection();
+  await connection.beginTransaction();
 
-if (bookIds.length === 0) {
-  return res.status(400).json({ error: 'No book IDs provided' });
-}
+  try {
+    // Clear existing cart items for the user
+    await connection.query('DELETE FROM cart WHERE user_id = ?', [userId]);
 
-const [bookRows] = await db.promise().query('SELECT id FROM books WHERE id IN (?)', [bookIds]);
-const existingBookIds = bookRows.map(row => row.id);
-
-if (bookIds.some(bookId => !existingBookIds.includes(bookId))) {
-  return res.status(400).json({ error: 'One or more book IDs do not exist' });
-}
-
-  const deleteQuery = 'DELETE FROM cart WHERE user_id = ?';
-  db.query(deleteQuery, [userId], (err) => {
-    if (err) {
-      console.error('Error deleting cart items:', err);
-      return res.status(500).json({ error: 'Database error' });
+    // Insert new cart items
+    for (const item of cartItems) {
+      await connection.query(
+        'INSERT INTO cart (user_id, book_id, quantity, color) VALUES (?, ?, ?, ?)',
+        [userId, item.bookId, item.quantity, item.color]
+      );
     }
 
-    const insertQuery = 'INSERT INTO cart (user_id, book_id, quantity) VALUES ?';
-    const values = cartItems.map(item => [userId, item.bookId, item.quantity]);
-    db.query(insertQuery, [values], (err) => {
-      if (err) {
-        console.error('Error inserting cart items:', err);
-        return res.status(500).json({ error: 'Database error' });
-      }
-      res.status(200).json(cartItems);
-    });
-  });
+    // Commit transaction
+    await connection.commit();
+    res.status(200).send({ message: 'Cart saved successfully' });
+  } catch (error) {
+    // Rollback transaction in case of error
+    await connection.rollback();
+    console.error('Error saving cart:', error);
+    res.status(500).json({ error: 'Database error' });
+  } finally {
+    // Release connection
+    connection.release();
+  }
 });
 
 

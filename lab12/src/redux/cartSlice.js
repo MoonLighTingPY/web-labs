@@ -8,7 +8,8 @@ const saveCart = async (cart) => {
       userId,
       cartItems: cart.map(item => ({
         bookId: item.id,
-        quantity: item.quantity
+        quantity: item.quantity,
+        color: item.color
       }))
     };
     console.log('Saving cart with payload:', payload);
@@ -23,8 +24,9 @@ const cartSlice = createSlice({
   initialState: [], // Ensure initial state is an array
   reducers: {
     addToCart: (state, action) => {
-      if (!Array.isArray(state)) return []; // Ensure state is an array
+      if (!Array.isArray(state)) return [];
       const { id, color, quantity, stock } = action.payload;
+      console.log('Adding to cart:', action.payload);
       const existingItem = state.find(item => item.id === id && item.color === color);
       if (existingItem) {
         if (existingItem.quantity + quantity <= stock) {

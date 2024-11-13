@@ -25,7 +25,7 @@ function CheckoutPage() {
       phone: Yup.string().required('Phone Number is required'),
       address: Yup.string().required('Address is required'),
     }),
-    onSubmit: (values) => {
+    onSubmit: () => {
       dispatch(clearCart());
       navigate('/success');
     },
