@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, updateUsername } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
+
 const Login = () => {
   const dispatch = useDispatch();
   const loginError = useSelector((state) => state.user.loginError);
@@ -24,8 +25,11 @@ const Login = () => {
       password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
     }),
     onSubmit: (values) => {
-      dispatch(loginUser(values)).then(() => {
-        navigate('/'); // Redirect to home page after successful login
+      dispatch(loginUser(values)).then((response) => {
+        if (response.payload.token) {
+          localStorage.setItem('jwtToken', response.payload.token);
+          navigate('/');
+        }
       });
     },
   });

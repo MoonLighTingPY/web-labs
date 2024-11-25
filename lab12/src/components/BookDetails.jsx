@@ -23,20 +23,25 @@ const BookDetails = () => {
     axios.get(`http://localhost:5000/api/books/${id}`)
       .then(response => {
         const bookData = response.data;
-        setBook(bookData);
-
-        const availableColors = Object.keys(bookData.stock).filter(color => bookData.stock[color] > 0);
+        const stockObject = bookData.stock.reduce((acc, item) => {
+          acc[item.color] = item.quantity;
+          return acc;
+        }, {});
+        setBook({ ...bookData, stock: stockObject });
+        console.log('Book data:', bookData);
+        const availableColors = Object.keys(stockObject).filter(color => stockObject[color] > 0);
+        console.log('Available colors:', availableColors);
         if (availableColors.length > 0) {
           setSelectedColor(availableColors[0]); // Set default color to the first available color
         } else {
           setFeedback('There is nothing in stock for this book.');
-          setSelectedColor(availableColors[0]); // Set default color to the first available color
         }
       })
       .catch(error => console.error('Error fetching book details:', error));
   }, [id]);
 
   if (!book) return <Typography>Loading...</Typography>;
+
 
   const handleAddToCart = () => {
     const cartItem = cart.find(item => item.id === book.id && item.color === selectedColor);
@@ -59,7 +64,7 @@ const BookDetails = () => {
         <CardMedia
           component="img"
           height="300"
-          image={book.picture}
+          image={book.image_url}
           alt={book.title}
           sx={{ borderRadius: '16px 16px 0 0' }}
         />

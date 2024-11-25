@@ -1,17 +1,37 @@
 // src/components/CartPage.jsx
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { incrementQuantity, decrementQuantity, removeFromCart } from '../redux/cartSlice';
+import { incrementQuantity, decrementQuantity, removeFromCart, setCart } from '../redux/cartSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Typography, Box, Grid, Alert, Card, CardContent, CardMedia, IconButton } from '@mui/material';
 import { Add, Remove, Delete } from '@mui/icons-material';
+import axios from 'axios';
 
 const CartPage = () => {
-  const cart = useSelector((state) => Array.isArray(state.cart) ? state.cart : []); // Ensure cart is an array
+  const cart = useSelector((state) => state.cart);
   const email = useSelector((state) => state.user.user?.email);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState('');
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const response = await axios.get('/api/cart', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
+          }
+        });
+        console.log ('Cart:', response.data);
+        dispatch(setCart(response.data));
+      } catch (error) {
+        console.error('Error fetching cart items:', error);
+        setFeedback('Error fetching cart items');
+      }
+    };
+
+    fetchCart();
+  }, [dispatch]);
 
   const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
@@ -59,7 +79,7 @@ const CartPage = () => {
                   <CardMedia
                     component="img"
                     height="200"
-                    image={item.picture} // Assuming 'picture' field exists in books.json
+                    image={item.image_url} // Assuming 'picture' field exists in books.json
                     alt={item.title}
                     sx={{ borderRadius: '16px 16px 0 0' }}
                   />

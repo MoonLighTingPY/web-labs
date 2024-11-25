@@ -53,7 +53,7 @@ function HomeContent() {
                 <CardMedia
                   component="img"
                   height="300"
-                  image={featuredBook.picture}
+                  image={featuredBook.image_url}
                   alt={featuredBook.title}
                   sx={{ borderRadius: '16px 16px 0 0' }}
                 />
@@ -76,7 +76,7 @@ function HomeContent() {
               <CardMedia
                 component="img"
                 height="200"
-                image={book.picture}
+                image={book.image_url}
                 alt={book.title}
                 sx={{ borderRadius: '16px 16px 0 0' }}
               />
