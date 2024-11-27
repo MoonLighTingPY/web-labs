@@ -43,7 +43,7 @@ function HomeContent() {
           marginBottom: '20px' 
         }}
       >
-        Welcome, {user.isAuthenticated ? user.user.username : 'Guest'}!
+        Welcome, {user.isAuthenticated ? user.email : 'Guest'}!
       </Typography>
       {featuredBook && (
         <Box mb={4}>

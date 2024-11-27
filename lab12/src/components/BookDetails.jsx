@@ -1,10 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux';
+
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Typography, Button, Card, CardContent, CardMedia, Alert, TextField } from '@mui/material';
-import { addToCart } from '../redux/cartSlice';
 import CustomSelect from './CustomSelect.jsx';
+import { getAuthHeaders } from '../utils/api';
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -13,11 +13,7 @@ const BookDetails = () => {
   const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const cart = useSelector((state) => {
-    console.log('Cart state:', state.cart);
-    return Array.isArray(state.cart) ? state.cart : [];
-  });
+
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/books/${id}`)
@@ -28,9 +24,7 @@ const BookDetails = () => {
           return acc;
         }, {});
         setBook({ ...bookData, stock: stockObject });
-        console.log('Book data:', bookData);
         const availableColors = Object.keys(stockObject).filter(color => stockObject[color] > 0);
-        console.log('Available colors:', availableColors);
         if (availableColors.length > 0) {
           setSelectedColor(availableColors[0]); // Set default color to the first available color
         } else {
@@ -42,19 +36,59 @@ const BookDetails = () => {
 
   if (!book) return <Typography>Loading...</Typography>;
 
-
-  const handleAddToCart = () => {
-    const cartItem = cart.find(item => item.id === book.id && item.color === selectedColor);
-    const totalBooksInCart = cart.reduce((total, item) => total + item.quantity, 0);
-    const updatedQuantity = cartItem ? cartItem.quantity + quantity : quantity;
+  const handleAddToCart = async () => {
+    try {
+      // Fetch existing cart items
+      const existingCartResponse = await axios.get('/api/cart', getAuthHeaders());
+      const existingCartItems = existingCartResponse.data;
   
-    if (updatedQuantity > book.stock[selectedColor]) {
-      const availableColors = Object.keys(book.stock).filter(color => book.stock[color] > 0 && color !== selectedColor);
-      setFeedback(`You cannot add more of this book in ${selectedColor} than is in stock. Available colors: ${availableColors.join(', ')}`);
-    } else {
-      console.log('Adding to cart:', { ...book, color: selectedColor, quantity, stock: book.stock[selectedColor] });
-      dispatch(addToCart({ ...book, color: selectedColor, quantity, stock: book.stock[selectedColor] }));
-      setFeedback(`Book added to cart successfully! You have ${updatedQuantity} of this book in ${selectedColor} in your cart. Total books in cart: ${totalBooksInCart + quantity}`);
+      // Merge new item with existing cart items
+      const newItem = {
+        book_id: book.id,
+        color: selectedColor,
+        quantity: quantity
+      };
+  
+      const existingItemIndex = existingCartItems.findIndex(
+        item => item.book_id === newItem.book_id && item.color === newItem.color
+      );
+  
+      let totalQuantity = newItem.quantity;
+      if (existingItemIndex !== -1) {
+        // Update quantity if item already exists
+        totalQuantity += existingCartItems[existingItemIndex].quantity;
+      }
+  
+      // Check if there is enough stock
+      if (totalQuantity > book.stock[selectedColor]) {
+        setFeedback('Not enough stock available.');
+        return;
+      }
+  
+      if (existingItemIndex !== -1) {
+        existingCartItems[existingItemIndex].quantity = totalQuantity;
+      } else {
+        existingCartItems.push(newItem);
+      }
+  
+      // Save updated cart items
+      const response = await axios.post(
+        'http://localhost:5000/api/saveCart',
+        {
+          cartItems: existingCartItems.map(item => ({
+            bookId: item.book_id,
+            color: item.color,
+            quantity: item.quantity
+          }))
+        },
+        getAuthHeaders()
+      );
+  
+      console.log('Add to cart response:', response.data);
+      setFeedback('Book added to cart successfully!');
+    } catch (error) {
+      console.error('Error adding book to cart:', error);
+      setFeedback('Failed to add book to cart.');
     }
   };
 
