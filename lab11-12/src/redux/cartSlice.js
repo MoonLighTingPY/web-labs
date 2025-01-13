@@ -5,7 +5,7 @@ const cartSlice = createSlice({
   initialState: [], // Ensure initial state is an array
   reducers: {
     addToCart: (state, action) => {
-      if (!Array.isArray(state)) return []; // Ensure state is an array
+      if (!Array.isArray(state)) return [];
       const { id, color, quantity, stock } = action.payload;
       const existingItem = state.find(item => item.id === id && item.color === color);
       if (existingItem) {
@@ -42,7 +42,8 @@ const cartSlice = createSlice({
       if (!Array.isArray(state)) return []; // Ensure state is an array
       return state.filter(i => !(i.id === action.payload.id && i.color === action.payload.color));
     },
-    clearCart: () => {
+    clearCart: (state) => {
+      if (!Array.isArray(state)) return []; // Ensure state is an array
       return [];
     },
   },

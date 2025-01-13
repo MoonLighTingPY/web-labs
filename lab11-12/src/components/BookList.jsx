@@ -75,7 +75,7 @@ const BookList = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={book.picture}
+                image={book.image_url}
                 alt={book.title}
                 sx={{ borderRadius: '16px 16px 0 0' }}
               />

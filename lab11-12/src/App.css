@@ -168,35 +168,30 @@ footer {
 
 .cart-page .MuiCard-root {
   margin-bottom: 20px;
-  border-radius: 16px;
+  border-radius: 24px; /* Increase the border-radius for more rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 300px; /* Increase the height */
+  width: 250px; /* Decrease the width */
 }
-
 .cart-page .MuiCardMedia-root {
-  border-radius: 16px 16px 0 0;
+  border-radius: 24px 24px 0 0; /* Match the increased border-radius */
 }
-
 .cart-page .MuiCardContent-root {
   padding: 20px;
 }
-
 .cart-page .MuiTypography-h5 {
   font-weight: bold;
 }
-
 .cart-page .MuiTypography-body2 {
   color: #666;
 }
-
 .cart-page .MuiButton-containedPrimary {
   background-color: #1976d2;
   color: #fff;
 }
-
 .cart-page .MuiButton-containedPrimary:hover {
   background-color: #1565c0;
 }
-
 .cart-page .MuiAlert-root {
   margin-top: 20px;
 }
