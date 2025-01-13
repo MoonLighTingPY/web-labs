@@ -1,0 +1,202 @@
+/* App.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Colors */
+:root {
+  --primary-color: #3a6ea5;
+  --secondary-color: #ffffff;
+  --background-color: #f5f7fa;
+  --text-color: #333;
+  --error-color: #d9534f;
+  --gray-light: #d3dae3;
+}
+
+/* General Layout */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* Button Styling */
+button, .MuiButton-containedPrimary {
+  cursor: pointer;
+  background-color: var(--primary-color) !important;
+  color: var(--secondary-color) !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  transition: background-color 0.3s ease !important;
+  text-transform: none !important;
+}
+
+button:hover, .MuiButton-containedPrimary:hover {
+  background-color: #315e8a !important;
+}
+
+/* Custom Select */
+.MuiFormControl-root {
+  min-width: 150px;
+}
+
+/* Text Field Styling */
+.MuiOutlinedInput-root {
+  border-radius: 8px !important;
+  background-color: var(--secondary-color) !important;
+}
+
+.MuiFormHelperText-root {
+  color: var(--error-color) !important;
+  font-size: 0.875rem !important;
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.form-title {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+}
+
+/* Error Message */
+.error-message {
+  color: var(--error-color);
+  font-size: 0.9rem;
+  margin-top: -10px;
+  padding-left: 10px;
+}
+
+/* Custom Select */
+.MuiFormControl-root {
+  min-width: 150px;
+}
+
+/* Footer Styling */
+footer {
+  margin-top: 40px;
+  padding: 20px 0;
+  background-color: #f1f4f8;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-color);
+}
+
+.welcome-text {
+  color: var(--primary-color);
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Success Page */
+.success-page {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.success-page .MuiTypography-h4 {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.success-page .MuiTypography-body1 {
+  margin-top: 20px;
+  color: #666;
+}
+
+.success-page .MuiButton-contained {
+  margin-top: 40px;
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.success-page .MuiButton-contained:hover {
+  background-color: #45a049;
+}
+
+/* Cart Page */
+.cart-page {
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.cart-page .MuiCard-root {
+  margin-bottom: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart-page .MuiCardMedia-root {
+  border-radius: 16px 16px 0 0;
+}
+
+.cart-page .MuiCardContent-root {
+  padding: 20px;
+}
+
+.cart-page .MuiTypography-h5 {
+  font-weight: bold;
+}
+
+.cart-page .MuiTypography-body2 {
+  color: #666;
+}
+
+.cart-page .MuiButton-containedPrimary {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.cart-page .MuiButton-containedPrimary:hover {
+  background-color: #1565c0;
+}
+
+.cart-page .MuiAlert-root {
+  margin-top: 20px;
+}
